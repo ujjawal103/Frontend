@@ -29,6 +29,9 @@ import {useSocket} from './context/SocketContext'
 import { StoreDataContext } from './context/StoreContext'
 import OrderSuccess from './pages/OrderSuccess'
 
+import { App as CapacitorApp } from "@capacitor/app";
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -72,6 +75,27 @@ useEffect(() => {
     socket.off("new-order", handleNewOrder);
   };
 }, [socket]);
+
+
+
+const navigate = useNavigate();
+
+  useEffect(() => {
+    // Listen for back button press
+    CapacitorApp.addListener("backButton", ({ canGoBack }) => {
+      // Agar React Router me piche route hai to navigate(-1)
+      if (window.history.state && window.history.state.idx > 0) {
+        navigate(-1);
+      } else {
+        // Nahi to app exit kar do
+        CapacitorApp.exitApp();
+      }
+    });
+
+    return () => {
+      CapacitorApp.removeAllListeners();
+    };
+  }, []);
 
 
 
