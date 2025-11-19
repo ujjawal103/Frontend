@@ -140,7 +140,7 @@ const OrderBillModal = ({ orderId, onClose }) => {
           <img
             src={order.storeId.storeDetails.photo || "/store.png"}
             alt="Store Logo"
-            className="rounded-full h-40 text-center object-cover"
+            className="rounded-full w-40 h-40  text-center object-cover"
           />
         </div>
 

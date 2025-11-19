@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import Lottie from "lottie-react";
+import LogoutAnim from "../assets/logout.json";
 
 const StoreLogout = () => {
 
@@ -26,10 +28,21 @@ const StoreLogout = () => {
 
 
   return (
-    <div>
-      LOGOUT
+    <div className="h-screen w-full flex flex-col items-center justify-center bg-white px-4">
+
+      {/* ⭐ Lottie Animation */}
+      <Lottie
+        animationData={LogoutAnim}
+        loop={true}
+        className="w-56 mb-4"
+      />
+
+      {/* ⭐ Text */}
+      <p className="text-xl text-pink-600 font-semibold tracking-wide animate-pulse">
+        Logging Out...
+      </p>
     </div>
-  )
+  );
 }
 
 export default StoreLogout
