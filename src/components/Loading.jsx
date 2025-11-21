@@ -29,7 +29,7 @@ import loadingAnimation from "../assets/loading.json";
 
 export default function Loading({ message = "Loading..." }) {
   return (
-    <div className="fixed inset-0 z-[30] flex flex-col items-center justify-center bg-white ml-0 md:ml-65 mb-20 md:mb-0">
+    <div className="fixed inset-0 z-[30] flex flex-col items-center justify-center bg-white ml-0 md:ml-60 mb-20 md:mb-0">
 
       {/* Lottie Animation */}
       <div className="w-48 h-auto">
