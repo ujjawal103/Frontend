@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from '../components/Loading';
+import SquareLoader from '../components/SquareLoader';
 import toast from 'react-hot-toast';
 import { StoreDataContext } from '../context/StoreContext';
 
@@ -49,7 +49,7 @@ const StoreProtectedWrapper = ({ children }) => {
   }, [token, navigate]);
 
   if(isLoading){
-    return <Loading message="Loading..." />;
+    return <SquareLoader />;
   }
 
   return <>{children}</>;
