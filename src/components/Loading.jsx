@@ -27,7 +27,7 @@ import Lottie from "lottie-react";
 // 👇 Your uploaded animation file here
 import loadingAnimation from "../assets/loading.json"; 
 
-export default function Loading({ message = "Loading..." }) {
+export default function Loading({ message = "Loading, please wait..." }) {
   return (
     <div className="fixed inset-0 z-[30] flex flex-col items-center justify-center bg-white ml-0 md:ml-60 mb-20 md:mb-0">
 

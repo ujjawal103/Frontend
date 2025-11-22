@@ -149,7 +149,7 @@ const TableCard = ({ table, onRefresh }) => {
               align-items: center;
               justify-content: center;
               height: 100vh;
-              background: #fdfdfd;
+              background: #de2969ff;
               text-align: center;
             }
             .container {
@@ -213,8 +213,8 @@ const TableCard = ({ table, onRefresh }) => {
   return (
     <>
     {loading && <Loading message={message} />}
-      <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-between text-center border hover:shadow-lg transition">
-        <h2 className="text-lg font-semibold">Table #{table.tableNumber}</h2>
+      <div className="bg-pink-100 shadow-md rounded-xl p-4 flex flex-col items-center justify-between text-center border border-pink-100 hover:shadow-lg transition">
+        <h2 className="text-lg font-semibold text-pink-600">Table #{table.tableNumber}</h2>
 
         <img
           src={table.qrCode}
@@ -264,7 +264,7 @@ const TableCard = ({ table, onRefresh }) => {
       {showEdit && (
         <div className="p-0 md:pl-65 fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center w-80">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            <h3 className="text-lg font-semibold text-pink-600 mb-3">
               Edit Table #{table.tableNumber}
             </h3>
             <input
@@ -272,7 +272,7 @@ const TableCard = ({ table, onRefresh }) => {
               placeholder="Enter new table number"
               value={newTableNumber}
               onChange={(e) => setNewTableNumber(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 text-center focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 text-center focus:outline-none focus:ring-2 focus:ring-pink-400"
             />
             {errorMsg && (
               <p className="text-sm text-red-500 mb-3">{errorMsg}</p>
@@ -286,7 +286,7 @@ const TableCard = ({ table, onRefresh }) => {
               </button>
               <button
                 onClick={handleEdit}
-                className="px-4 py-2 rounded-md bg-yellow-500 hover:bg-yellow-600 text-white font-medium"
+                className="px-4 py-2 rounded-md bg-pink-500 hover:bg-pink-600 text-white font-medium"
               >
                 Save
               </button>
@@ -299,7 +299,7 @@ const TableCard = ({ table, onRefresh }) => {
       {showConfirm && (
         <div className="p-0 md:pl-65 fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center w-80">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            <h3 className="text-lg font-semibold text-pink-600 mb-3">
               Delete Table #{table.tableNumber}?
             </h3>
             <p className="text-gray-600 text-sm mb-5">

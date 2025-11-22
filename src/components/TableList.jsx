@@ -1,8 +1,9 @@
 import React from "react";
 import TableCard from "./TableCard";
+import Loading from "./Loading";
 
 const TableList = ({ tables, loading, onRefresh }) => {
-  if (loading) return <p className="text-center text-gray-600">Loading tables...</p>;
+  if (loading) return <Loading />;
 
   if (tables.length === 0)
     return (
