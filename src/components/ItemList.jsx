@@ -272,7 +272,7 @@ const handleDelete = async () => {
                 className={`transition-all duration-300 rounded-full px-4 py-2 cursor-pointer flex items-center gap-2 font-medium text-white shadow-md 
                   ${
                     item.available
-                      ? "bg-green-500 hover:bg-green-600"
+                      ? "bg-pink-500 hover:bg-pink-600"
                       : "bg-gray-400 hover:bg-gray-500"
                   }`}
               >
@@ -379,7 +379,7 @@ const handleDelete = async () => {
               </button>
               <button
                 onClick={handleAddVariant}
-                className="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+                className="px-3 py-1 rounded-md bg-pink-500 text-white hover:bg-pink-600"
               >
                 Add
               </button>

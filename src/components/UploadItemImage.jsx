@@ -58,7 +58,7 @@ const UploadItemImage = ({ item, onClose, onUpdated }) => {
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-800">
-            Upload Image — {item.itemName}
+            Upload Image — <span className="text-pink-600 font-bold">{item.itemName}</span>
           </h3>
           <button
             onClick={onClose}
@@ -129,7 +129,7 @@ const UploadItemImage = ({ item, onClose, onUpdated }) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 flex items-center gap-2"
+              className="px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 flex items-center gap-2"
               disabled={loading}
             >
               {loading ? (

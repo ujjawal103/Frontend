@@ -64,7 +64,7 @@ const VariantEditButton = ({ item, variant, onUpdated }) => {
                 setName(e.target.value);
                 if (errors.name) setErrors({ ...errors, name: "" });
               }}
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"
               placeholder="Variant Name"
             />
             {errors.name && (
@@ -80,7 +80,7 @@ const VariantEditButton = ({ item, variant, onUpdated }) => {
                 setPrice(e.target.value);
                 if (errors.price) setErrors({ ...errors, price: "" });
               }}
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"
               placeholder="Price"
             />
             {errors.price && (
@@ -102,8 +102,8 @@ const VariantEditButton = ({ item, variant, onUpdated }) => {
               disabled={loading}
               className={`px-4 py-2 rounded-md text-white ${
                 loading
-                  ? "bg-blue-300 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600"
+                  ? "bg-pink-500 cursor-not-allowed"
+                  : "bg-pink-500 hover:bg-pink-600"
               } transition`}
             >
               {loading ? "Saving..." : "Save"}

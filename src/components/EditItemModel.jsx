@@ -54,7 +54,7 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
   return (
     <div className="p-0 md:pl-65 fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center">
       <div className="bg-white rounded-xl w-11/12 max-w-md p-5 shadow-lg">
-        <h3 className="text-lg font-semibold mb-3">Edit Item</h3>
+        <h3 className="text-lg font-semibold mb-3 text-pink-600">Edit Item</h3>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
@@ -104,7 +104,7 @@ const EditItemModal = ({ item, onClose, onUpdated }) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-md bg-green-600 hover:bg-green-700 text-white text-sm"
+              className="px-4 py-2 rounded-md bg-pink-500 hover:bg-pink-600 text-white text-sm"
               disabled={loading}
             >
               {loading ? "Saving..." : "Save"}

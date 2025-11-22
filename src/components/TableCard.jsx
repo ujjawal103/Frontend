@@ -88,7 +88,7 @@ const TableCard = ({ table, onRefresh }) => {
           align-items: center;
           justify-content: center;
           width: 600px;
-          background: white;
+          background: #d8cc22ff;
           padding: 40px;
           border-radius: 16px;
           border: 2px solid #ccc;
@@ -98,7 +98,7 @@ const TableCard = ({ table, onRefresh }) => {
           <h1 style="font-size:28px;font-weight:700;margin-bottom:10px;color:#1a1a1a;">🍽️ ${store.storeName}</h1>
           <h2 style="font-size:18px;color:#555;margin-bottom:25px;">Table #${table.tableNumber}</h2>
           <img id="qr-image" crossOrigin="anonymous" src="${table.qrCode}" alt="QR Code" style="width:350px;height:350px;margin:20px 0;" />
-          <p style="font-size:18px;font-weight:600;color:${table.isOccupied ? "#e63946" : "#06d6a0"};">
+          <p style="font-size:18px;font-weight:600;color:${table.isOccupied ? "#e72333ff" : "#de2969ff"};">
             ${table.isOccupied ? "Occupied" : "Available"}
           </p>
           <p style="font-size:14px;color:#666;margin-top:20px;">Scan the QR to place your order easily</p>
