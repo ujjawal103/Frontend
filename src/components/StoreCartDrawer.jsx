@@ -46,23 +46,32 @@ const StoreCartDrawer = ({ open, setOpen, cart, setCart, storeId, store, tables 
     return c?.quantity || 0;
   };
 
-  // --- Group items ---
-  const groupedItems = cart.reduce((acc, curr) => {
-    if (!acc[curr.itemId]) {
-      acc[curr.itemId] = {
-        itemId: curr.itemId,
-        itemName: curr.itemName,
-        variants: [],
-      };
-    }
-    acc[curr.itemId].variants.push({
-      type: curr.variant,
-      quantity: curr.quantity,
-      price: curr.price,
-    });
-    return acc;
-  }, {});
-  const groupedArray = Object.values(groupedItems);
+    // --- Group items with totals ---
+const groupedItems = cart.reduce((acc, curr) => {
+  if (!acc[curr.itemId]) {
+    acc[curr.itemId] = {
+      itemId: curr.itemId,
+      itemName: curr.itemName,
+      variants: [],
+      totalItemPrice: 0
+    };
+  }
+
+  const variantTotal = curr.quantity * curr.price;
+
+  acc[curr.itemId].variants.push({
+    type: curr.variant,
+    quantity: curr.quantity,
+    price: curr.price,
+    total: variantTotal,
+  });
+
+  acc[curr.itemId].totalItemPrice += variantTotal;
+
+  return acc;
+}, {});
+
+const groupedArray = Object.values(groupedItems);
 
   // --- Billing ---
   const subTotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
@@ -81,11 +90,24 @@ const StoreCartDrawer = ({ open, setOpen, cart, setCart, storeId, store, tables 
 
     try {
       setLoading(true);
+
+      const billingSummary = {
+        subTotal,
+        gstApplicable,
+        gstRate,
+        restaurantChargeApplicable,
+        restaurantCharge,
+        gstAmount,
+        restaurantChargeAmount,
+        totalAmount: total
+      };
+
       await axios.post(`${import.meta.env.VITE_BASE_URL}orders/create`, {
         storeId,
         tableId: selectedTable,
         username: username.trim() || "Guest",
         items: groupedArray,
+        billingSummary
       });
       toast.success("Order created successfully");
       navigate("/order-success");
