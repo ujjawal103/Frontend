@@ -84,8 +84,6 @@ const groupedArray = Object.values(groupedItems);
   // --- Checkout ---
   const handleCheckout = async () => {
    if (cart.length === 0) return toast.error("Cart is empty");
-    if (!selectedTable) return toast.error("Select a table first");
-
     try {
       setLoading(true);
 
