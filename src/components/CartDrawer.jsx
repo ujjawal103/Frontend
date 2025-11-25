@@ -98,7 +98,7 @@ const groupedArray = Object.values(groupedItems);
         totalAmount: total
       };
 
-      await axios.post(`${import.meta.env.VITE_BASE_URL}orders/create`, {
+      const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}orders/create`, {
         storeId,
         tableId,
         username: username.trim() || "Guest",
