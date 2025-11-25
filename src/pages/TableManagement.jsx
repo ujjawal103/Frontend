@@ -83,7 +83,7 @@ const fetchTables = async () => {
 
       <div className="w-full min-h-screen bg-gray-100 md:pl-64 md:pt-8 p-4 mb-20 md:mb-0">
         {/* ✅ Fixed Header */}
-        <div className="fixed flex justify-between items-center bg-pink-600 w-full rounded-bl-lg rounded-br-lg top-0 left-0 md:pl-64 p-4 z-10 shadow-md">
+        <div className="fixed flex justify-between items-center bg-pink-600 w-full top-0 left-0 md:pl-64 p-4 z-10 shadow-md">
           <h1 className="text-xl md:text-2xl font-bold text-white text-center">
             Your Tables
           </h1>
