@@ -100,7 +100,7 @@ const groupedArray = Object.values(groupedItems);
 
       await axios.post(`${import.meta.env.VITE_BASE_URL}orders/create`, {
         storeId,
-        tableId: selectedTable,
+        tableId,
         username: username.trim() || "Guest",
         items: groupedArray,
         billingSummary
