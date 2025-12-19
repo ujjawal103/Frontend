@@ -355,7 +355,9 @@ export default function FooterNavStore() {
           >
             <Link
               to="/store-menu"
-              className="flex items-center gap-2 text-black md:text-white w-full p-4"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/store-menu") ? "border-t" : ""
+              } w-full p-4`}
             >
               <FaPlusCircle size={22} />
               <span className="text-sm">Create Order</span>
@@ -372,7 +374,9 @@ export default function FooterNavStore() {
           >
             <Link
               to="/today-orders"
-              className="flex items-center gap-2 text-black md:text-white w-full p-4"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/today-orders") ? "border-t" : ""
+              } w-full p-4`}
             >
               <FaClipboardList size={22} />
               <span className="text-sm">Today Orders</span>
@@ -424,7 +428,9 @@ export default function FooterNavStore() {
           >
             <Link
               to="/table-analytics"
-              className="flex items-center gap-2 text-black md:text-white w-full p-4"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/table-analytics") ? "border-t" : ""
+              } w-full p-4`}
             >
               <FaTable size={22} />
               <span className="text-sm">Table Orders</span>
@@ -444,7 +450,9 @@ export default function FooterNavStore() {
           >
             <Link
               to="/daily-analytics"
-              className="flex items-center gap-2 text-black md:text-white w-full p-4"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/daily-analytics") ? "border-t" : ""
+              } w-full p-4`}
             >
               <FaChartBar size={22} />
               <span className="text-sm">Daily Analytics</span>
@@ -460,7 +468,9 @@ export default function FooterNavStore() {
           >
             <Link
               to="/monthly-analytics"
-              className="flex items-center gap-2 text-black md:text-white w-full p-4"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/monthly-analytics") ? "border-t" : ""
+              } w-full p-4`}
             >
               <FaChartLine size={22} />
               <span className="text-sm">Monthly Analytics</span>
@@ -476,7 +486,9 @@ export default function FooterNavStore() {
           >
             <Link
               to="/gst-charges"
-              className="flex items-center gap-2 text-black md:text-white w-full p-4"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/gst-charges") ? "border-t" : ""
+              } w-full p-4`}
             >
               <FaFileInvoiceDollar size={22} />
               <span className="text-sm">GST & Charges</span>
@@ -486,27 +498,29 @@ export default function FooterNavStore() {
           
         </div>
 
+
+
         {/* Account */}
         <div
-          className={`md:w-60 p-4 cursor-pointer ${
-            drawerOpen ? "md:bg-gray-800" : "md:hover:bg-gray-800"
-          }`}
-          onClick={handleProfile}
-        >
-          <button className={`flex flex-col items-center text-black md:text-white ${
-              drawerOpen ? "text-pink-700 border-t" : "sm:hover:pink-600"
-            }  w-auto md:flex-row md:items-center md:gap-2`}>
-            <FaUser size={22} />
-            <span className="text-xs md:text-sm">Account</span>
-          </button>
-        </div>
+                  className={`md:w-60 p-4 cursor-pointer ${
+                    drawerOpen ? "md:bg-gray-800" : "md:hover:bg-gray-800"
+                  }`}
+                  onClick={handleProfile}
+                >
+                  <button className={`flex flex-col items-center text-black md:text-white ${
+                      drawerOpen ? "text-pink-700" : "sm:hover:pink-600"
+                    }  w-auto md:flex-row md:items-center md:gap-2`}>
+                    <FaUser size={22} />
+                    <span className="text-xs md:text-sm">Account</span>
+                  </button>
+                </div>
 
         {/* Drawer */}
-        {(profileFetched || drawerOpen) && (
+        {profileFetched?.store && (
           <AccountDrawerStore
             isOpen={drawerOpen}
             onClose={() => setDrawerOpen(false)}
-            store={profileFetched}
+            store={profileFetched.store}
           />
         )}
       </div>
