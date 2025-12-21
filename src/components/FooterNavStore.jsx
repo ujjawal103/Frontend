@@ -290,10 +290,8 @@ export default function FooterNavStore() {
     <>
       {loading && <Loading message={message} />}
 
-      <div className="fixed bottom-0 left-0 w-full md:top-0 md:left-0 md:h-full md:w-60 md:border-t shadow-md flex md:flex-col justify-between items-center py-2 z-50 bg-white md:bg-gray-900 overflow-y-auto overflow-x-hidden">
-        <div className="flex md:flex-col items-center justify-between w-[80vw] md:w-full">
-
-          {/* {logo image only for md and avove } */}
+      <div className="fixed bottom-0 left-0 w-full md:top-0 md:left-0 md:h-full md:w-60 md:border-t shadow-md flex md:flex-col justify-between items-center py-2 z-50 bg-white md:bg-gray-900">
+        {/* {logo image only for md and avove } */}
           <div className="hidden md:flex md:w-60 w-full justify-start md:gap-2 px-4 mb-1">
               <img
                 src="/tapResto.png"
@@ -301,6 +299,10 @@ export default function FooterNavStore() {
                 className="h-20 w-auto object-contain"
               />
           </div>
+        {/* <div className="flex md:flex-col items-center justify-between w-[80vw] md:w-full overflow-y-auto overflow-x-hidden no-scrollbar"> */}  
+        {/* // updated scrollbar ---> showing no scrollbar by uncommenting css from index.css       */}
+        <div className="flex md:flex-col items-center justify-between w-[80vw] md:w-full overflow-y-auto overflow-x-hidden thin-scrollbar">
+          
 
 
 
@@ -322,6 +324,8 @@ export default function FooterNavStore() {
               <span className="text-xs md:text-sm">Home</span>
             </Link>
           </div>
+
+          
 
           {/* Menu Items */}
           <div
