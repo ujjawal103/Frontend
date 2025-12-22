@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import FooterNavStore from "../components/FooterNavStore";
 import LoadingSkeleton from "../components/orders/LoadingSkeleton";
 import { StoreDataContext } from "../context/StoreContext";
@@ -8,6 +8,31 @@ import QuickActionCard from "../components/storeHome/QuickActionCard";
 const StoreHome = () => {
   const { store } = useContext(StoreDataContext);
   const navigate = useNavigate();
+  const scrollRef = useRef(null);
+
+useEffect(() => {
+  const container = scrollRef.current;
+  if (!container) return;
+
+  let index = 0;
+  const cardWidth = 220; // card width + gap
+
+  const interval = setInterval(() => {
+    index++;
+
+    if (index * cardWidth >= container.scrollWidth - container.clientWidth) {
+      index = 0;
+    }
+
+    container.scrollTo({
+      left: index * cardWidth,
+      behavior: "smooth",
+    });
+  }, 2500);
+
+  return () => clearInterval(interval);
+}, []);
+
 
   if (!store) return <LoadingSkeleton />;
 
@@ -35,7 +60,7 @@ const StoreHome = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-5">
           <h1 className="text-2xl md:text-[6vw] font-bold text-white font-serif">
-            {store.storeName}
+            {store?.storeName}
           </h1>
           <div className="flex items-center gap-3 mt-1">
             <span
@@ -45,58 +70,84 @@ const StoreHome = () => {
                   : "bg-rose-500 text-white"
               }`}
             >
-              {store.status.toUpperCase()}
+              {store?.status?.toUpperCase()}
             </span>
             <p className="text-xs text-gray-200 line-clamp-1">
-              {store.storeDetails?.address}
+              {store?.storeDetails?.address}
             </p>
           </div>
         </div>
       </div>
 
       {/* ===== QUICK ACTIONS ===== */}
-    <div className="p-5">
-      <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+      <div className="p-1 mt-2 pr-0 md:pl-5 md:pt-6 space-y-4">
+        {/* <h2 className="text-lg font-semibold mb-4">Quick Actions</h2> */}
 
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar overflow-y-hidden snap-x snap-mandatory pr-[200px] md:pr-[100px"
+        >
+          <div className="min-w-[250px] snap-start">
+            <QuickActionCard
+              icon="ri-table-fill"
+              label="Tables"
+              value={store?.tables?.length}
+              onClick={() => navigate("/tables")}
+            />
+          </div>
 
-        <QuickActionCard
-          icon="ri-table-fill"
-          label="Tables"
-          value={store.tables.length}
-          onClick={() => navigate("/tables")}
-        />
+          <div className="min-w-[250px] snap-start">
+            <QuickActionCard
+              icon="ri-restaurant-fill"
+              label="Menu"
+              value={store?.items?.length}
+              delay={0.05}
+              onClick={() => navigate("/menu")}
+            />
+          </div>
 
-        <QuickActionCard
-          icon="ri-restaurant-fill"
-          label="Menu"
-          value={store.items.length}
-          delay={0.05}
-          onClick={() => navigate("/menu")}
-        />
+          <div className="min-w-[250px] snap-start">
+            <QuickActionCard
+              icon="ri-chat-history-fill"
+              label="orders"
+              value={
+                store?.gstSettings?.restaurantChargeApplicable
+                  ? `₹${store?.gstSettings?.restaurantCharge}`
+                  : "No"
+              }
+              delay={0.15}
+              onClick={() => navigate("/orders")}
+            />
+          </div>
 
-        <QuickActionCard
-          icon="ri-percent-line"
-          label="GST"
-          value={store.gstSettings?.gstApplicable ? "On" : "Off"}
-          delay={0.1}
-          onClick={() => navigate("/settings/gst")}
-        />
+          <div className="min-w-[250px] snap-start">
+            <QuickActionCard
+              icon="ri-percent-line"
+              label="GST"
+              value={store?.gstSettings?.gstApplicable ? "On" : "Off"}
+              delay={0.1}
+              onClick={() => navigate("/settings/gst")}
+            />
+          </div>
 
-        <QuickActionCard
-          icon="ri-money-rupee-circle-fill"
-          label="Charges"
-          value={
-            store.gstSettings?.restaurantChargeApplicable
-              ? `₹${store.gstSettings.restaurantCharge}`
-              : "No"
-          }
-          delay={0.15}
-          onClick={() => navigate("/settings/charges")}
-        />
+          <div className="min-w-[250px] snap-start">
+            <QuickActionCard
+              icon="ri-money-rupee-circle-fill"
+              label="Charges"
+              value={
+                store?.gstSettings?.restaurantChargeApplicable
+                  ? `₹${store?.gstSettings?.restaurantCharge}`
+                  : "No"
+              }
+              delay={0.15}
+              onClick={() => navigate("/settings/charges")}
+            />
+          </div>
 
+          
+        </div>
       </div>
-    </div>
+
 
       <FooterNavStore />
     </div>
