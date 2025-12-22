@@ -4,6 +4,7 @@ import LoadingSkeleton from "../components/orders/LoadingSkeleton";
 import { StoreDataContext } from "../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import QuickActionCard from "../components/storeHome/QuickActionCard";
+import MonthlyTopItems from "../components/storeHome/MonthlyTopItems";
 
 const StoreHome = () => {
   const { store } = useContext(StoreDataContext);
@@ -40,7 +41,7 @@ useEffect(() => {
     store.storeDetails?.photo || "/defaultBanner.png";
 
   return (
-    <div className="w-full md:pl-60 pb-20 md:pb-0 bg-gray-50 min-h-screen pt-14 md:pt-0">
+    <div className="w-full md:pl-60 pb-25 md:pb-0 bg-gray-50 min-h-screen pt-14 md:pt-0">
 
       {/* ===== MOBILE TOP HEADER ===== */}
       <div className="fixed top-0 left-0 w-full h-14 bg-white border-b shadow-sm flex items-center justify-between px-4 z-50 md:hidden">
@@ -200,6 +201,10 @@ useEffect(() => {
       </div>
 
 
+      {/* ===== MONTHLY TOP ITEMS ===== */}
+       <div className=""> 
+        <MonthlyTopItems />
+       </div>
 
 
       <FooterNavStore />
