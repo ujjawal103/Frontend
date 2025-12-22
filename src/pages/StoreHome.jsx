@@ -149,6 +149,59 @@ useEffect(() => {
       </div>
 
 
+
+
+
+      {/* ===== TAP RESTO PROMO BANNER ===== */}
+      <div className="px-2 md:px-5 mt-4">
+        <div className="border-2 border-pink-600 md:border-0 rounded-xl bg-white overflow-hidden">
+
+          {/* ===== MOBILE VIEW ===== */}
+          <div className="md:hidden p-3">
+            <img
+              src="/homeBanner.png"
+              alt="Tap Resto Promo"
+              className="w-full h-20 object-cover rounded-lg"
+            />
+          </div>
+
+          {/* ===== DESKTOP VIEW ===== */}
+          <div className="hidden md:flex items-center justify-between px-10 py-8 bg-gradient-to-r from-pink-50 to-white">
+
+            {/* LEFT: TEXT */}
+            <div className="space-y-3 max-w-xl">
+              <h2 className="text-4xl font-extrabold text-pink-600 tracking-wide">
+                TAP RESTO
+              </h2>
+              <p className="text-xl text-gray-700">
+                Unlock Your Potential <span className="text-pink-600 font-semibold">Digitally</span>
+              </p>
+              <p className="text-sm text-gray-500 hidden lg:flex">
+                Smart tools to manage orders, menus & growth — all in one place.
+              </p>
+            </div>
+
+            {/* RIGHT: ILLUSTRATION */}
+            <div className="flex flex-shrink-0">
+              <img
+                src="/chef-illustration.png"
+                alt="Tap Resto Chef"
+                className="h-40 w-auto object-contain block"
+              />
+              <img
+                src="/chef.png"
+                alt="Tap Resto Chef"
+                className="h-40 w-auto object-cover block"
+              />
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
       <FooterNavStore />
     </div>
   );
