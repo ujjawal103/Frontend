@@ -1,15 +1,58 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useState , useContext, useRef, useEffect } from "react";
 import FooterNavStore from "../components/FooterNavStore";
 import LoadingSkeleton from "../components/orders/LoadingSkeleton";
 import { StoreDataContext } from "../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import QuickActionCard from "../components/storeHome/QuickActionCard";
 import MonthlyTopItems from "../components/storeHome/MonthlyTopItems";
+import Last5DaysAnalytics from "../components/storeHome/Last5DaysAnalytics";
+import HomeEndNote from "../components/storeHome/HomeEndNote";
+import axios from "axios";
 
 const StoreHome = () => {
   const { store } = useContext(StoreDataContext);
   const navigate = useNavigate();
   const scrollRef = useRef(null);
+  const [todayOrdersCount, setTodayOrdersCount] = useState(0);
+  const [todayRevenue, setTodayRevenue] = useState(0);
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+const storeToken = localStorage.getItem("token");
+
+const fetchTodayOrders = async () => {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+
+    const { data } = await axios.get(
+      `${BASE_URL}orders/store-orders/date?date=${today}`,
+      { headers: { Authorization: `Bearer ${storeToken}` } }
+    );
+
+    const orders = data.orders || [];
+
+    setTodayOrdersCount(orders.length);
+
+    const revenue = orders.reduce(
+      (sum, o) =>
+        ["confirmed", "completed"].includes(o.status)
+          ? sum + (o.totalAmount || 0)
+          : sum,
+      0
+    );
+
+    setTodayRevenue(revenue);
+  } catch (err) {
+    console.log("Failed to fetch today's orders");
+  }
+};
+
+
+useEffect(() => {
+  fetchTodayOrders();
+}, []);
+
+
+
 
 useEffect(() => {
   const container = scrollRef.current;
@@ -41,14 +84,14 @@ useEffect(() => {
     store.storeDetails?.photo || "/defaultBanner.png";
 
   return (
-    <div className="w-full md:pl-60 pb-25 md:pb-0 bg-gray-50 min-h-screen pt-14 md:pt-0">
+    <div className="w-full md:pl-60 pb-20 md:pb-0 bg-gray-50 min-h-screen pt-14 md:pt-0">
 
       {/* ===== MOBILE TOP HEADER ===== */}
-      <div className="fixed top-0 left-0 w-full h-14 bg-white border-b shadow-sm flex items-center justify-between px-4 z-50 md:hidden">
+      <div className="fixed top-0 left-0 w-full h-14 bg-white border-b-3 border-pink-600 shadow-sm flex items-center justify-between px-4 z-50 md:hidden">
         <img src="/tapResto.png" alt="Tap Resto" className="h-8" />
         <div className="text-right">
           <p className="text-xs text-gray-500">Today</p>
-          <p className="text-sm font-semibold text-gray-800">₹12,450</p>
+          <p className="text-sm font-semibold text-green-800">₹ {todayRevenue.toFixed(2)}</p>
         </div>
       </div>
 
@@ -93,7 +136,7 @@ useEffect(() => {
               icon="ri-table-fill"
               label="Tables"
               value={store?.tables?.length}
-              onClick={() => navigate("/tables")}
+              onClick={() => navigate("/table-management")}
             />
           </div>
 
@@ -103,21 +146,16 @@ useEffect(() => {
               label="Menu"
               value={store?.items?.length}
               delay={0.05}
-              onClick={() => navigate("/menu")}
+              onClick={() => navigate("/items")}
             />
           </div>
 
           <div className="min-w-[250px] snap-start">
             <QuickActionCard
               icon="ri-chat-history-fill"
-              label="orders"
-              value={
-                store?.gstSettings?.restaurantChargeApplicable
-                  ? `₹${store?.gstSettings?.restaurantCharge}`
-                  : "No"
-              }
-              delay={0.15}
-              onClick={() => navigate("/orders")}
+              label="Today Orders"
+              value={todayOrdersCount}
+              onClick={() => navigate("/today-orders")}
             />
           </div>
 
@@ -127,7 +165,7 @@ useEffect(() => {
               label="GST"
               value={store?.gstSettings?.gstApplicable ? "On" : "Off"}
               delay={0.1}
-              onClick={() => navigate("/settings/gst")}
+              onClick={() => navigate("/gst-charges")}
             />
           </div>
 
@@ -141,7 +179,7 @@ useEffect(() => {
                   : "No"
               }
               delay={0.15}
-              onClick={() => navigate("/settings/charges")}
+              onClick={() => navigate("/gst-charges")}
             />
           </div>
 
@@ -205,6 +243,13 @@ useEffect(() => {
        <div className=""> 
         <MonthlyTopItems />
        </div>
+
+      <Last5DaysAnalytics /> 
+
+       <div className="pt-4">
+        <HomeEndNote />
+        </div>       
+      
 
 
       <FooterNavStore />
