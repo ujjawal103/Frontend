@@ -63,11 +63,12 @@ const AdminLogin = () => {
   return (
    <>
    {loading && <Loading message={message}/>}
-    <div className=' h-screen w-full flex items-center justify-center md:justify-between bg-gray-50'>
-      <div className='w-full max-w-md p-7 flex flex-col items-start justify-between'>
+    <div className=' h-screen w-full flex items-start justify-center md:justify-between bg-gray-50'>
+      <div className='w-full min-h-screen max-w-md p-5 pb-2 flex flex-col items-start justify-between'>
        <div className='w-full'>
           <form className='w-full' onSubmit={(e) => submitHandler(e)}>
           <img  className='w-20 rounded-2xl' src="/logo.png" alt="logo" />
+          <p className='text-xl text-pink-400 py-3'>Verify you are admin</p>
           <h3 className='text-2xl mb-2 font-semibold'>What's your email</h3>
           <input 
               className='w-full p-2 border border-gray-300 rounded bg-[#eeeeee] mb-7 text-lg placeholder:text-base'
@@ -109,7 +110,7 @@ const AdminLogin = () => {
        <div className='w-full'>
         <Link
         to={"/store-login"}
-        className='w-full flex items-center justify-center p-3 rounded bg-[#111] text-white mb-7 mt-2 text-xl font-semibold'
+        className='w-full flex items-center justify-center p-3 rounded bg-[#111] text-white mb-2 mt-2 text-xl font-semibold'
         >
           SignIn as Restron
         </Link>
