@@ -73,6 +73,9 @@ const StoreLogin = () => {
     <>
     {loading && <Loading message={message}/>}
     <div className="min-h-screen w-full flex items-center justify-center md:justify-between bg-white">
+      <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
+          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
+        </div>
        <div className='w-full h-full max-w-md p-5 rounded-lg bg-white min-h-screen'>
           <form className='w-full' onSubmit={(e) => submitHandler(e)}>
           <img  className='w-20 rounded-2xl mb-2' src="/logo.png" alt="logo" />
@@ -110,9 +113,6 @@ const StoreLogin = () => {
                       </Link>
           </p>
        </div>
-       <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
-          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
-        </div>
     </div>
     </>
   )

@@ -64,6 +64,9 @@ const AdminLogin = () => {
    <>
    {loading && <Loading message={message}/>}
     <div className=' h-screen w-full flex items-start justify-center md:justify-between bg-gray-50'>
+       <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
+          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
+    </div>
       <div className='w-full min-h-screen max-w-md p-5 pb-2 flex flex-col items-start justify-between'>
        <div className='w-full'>
           <form className='w-full' onSubmit={(e) => submitHandler(e)}>
@@ -116,9 +119,7 @@ const AdminLogin = () => {
         </Link>
        </div>
       </div>
-      <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
-          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
-    </div>
+     
     </div>
    </>
   )

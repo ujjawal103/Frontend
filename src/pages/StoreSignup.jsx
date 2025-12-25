@@ -109,6 +109,9 @@ const StoreSignup = () => {
     <>
       {loading && <Loading message={message} />}
       <div className="min-h-screen w-full flex items-center justify-center md:justify-between bg-white">
+        <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
+          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
+        </div>
         <div className="w-full max-w-md  p-5 rounded-lg bg-white min-h-screen">
           <form onSubmit={submitHandler} className="flex flex-col text-sm">
             <div className="flex justify-start mb-3">
@@ -254,9 +257,6 @@ const StoreSignup = () => {
               Login
             </Link>
           </p>
-        </div>
-        <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
-          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
         </div>
       </div>
     </>
