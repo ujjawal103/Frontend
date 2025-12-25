@@ -108,11 +108,11 @@ const StoreSignup = () => {
   return (
     <>
       {loading && <Loading message={message} />}
-      <div className="h-screen w-full flex items-center justify-center bg-gray-50 min-h-[100vh] ">
-        <div className="w-full max-w-md p-5 rounded-lg shadow-md bg-white min-h-screen md:min-h-auto">
+      <div className="min-h-screen w-full flex items-center justify-center md:justify-between bg-white">
+        <div className="w-full max-w-md  p-5 rounded-lg bg-white min-h-screen">
           <form onSubmit={submitHandler} className="flex flex-col text-sm">
-            <div className="flex justify-center mb-3">
-              <img className="w-16" src="/instaraBarber.jpg" alt="Logo" />
+            <div className="flex justify-start mb-3">
+              <img className="w-16 rounded-2xl" src="/logo.png" alt="Logo" />
             </div>
 
             <h3 className="text-lg font-semibold mb-1">Store Name</h3>
@@ -243,7 +243,7 @@ const StoreSignup = () => {
 
             {error && <p className="text-red-500 mb-2 text-xs">{error}</p>}
 
-            <button className="w-full py-2 rounded bg-black text-white text-base font-semibold hover:bg-gray-800 transition">
+            <button className="w-full py-2 rounded bg-pink-600 text-white text-base font-semibold hover:bg-gray-800 transition">
               Register Store
             </button>
           </form>
@@ -254,6 +254,9 @@ const StoreSignup = () => {
               Login
             </Link>
           </p>
+        </div>
+        <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
+          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
         </div>
       </div>
     </>

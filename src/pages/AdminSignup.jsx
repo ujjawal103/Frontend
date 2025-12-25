@@ -75,10 +75,11 @@ const AdminSignup = () => {
   return (
   <>
    {loading && <Loading message={message}/>}
-   <div className=' h-screen w-full p-7 flex flex-col items-center justify-between'>
-       <div className='w-full md:w-1/3'>
+   <div className=' h-screen w-full flex items-center justify-center md:justify-between bg-gray-50'>
+    <div className='w-full max-w-md p-7 flex flex-col items-start justify-between'>
+       <div className='w-full'>
           <form className='w-full' onSubmit={(e) => submitHandler(e)}>
-          <img  className='w-20' src="/instaraUser.jpg" alt="" />
+          <img  className='w-20 rounded-2xl' src="/logo.png" alt="logo" />
           <h3 className='text-2xl mb-2 font-semibold'>Enter your Full name</h3>
           <div className='w-full flex gap-4'>
             <input 
@@ -131,22 +132,27 @@ const AdminSignup = () => {
           /> 
           {error && <p className='text-red-600 mb-4 text-sm'>{error}</p>}
           <button
-          className='w-full p-2 rounded mb-4 bg-[#111] text-white text-xl font-semibold'
+          className='w-full p-2 rounded mb-4 bg-pink-600 text-white text-xl font-semibold'
           >
             Register
           </button>
           </form>
           <Link to={"/admin-login"} className='text-blue-600 hover:underline'>You are admin ? login</Link> 
        </div>
-       <div className='w-full md:w-1/3 '>
+       <div className='w-full'>
         <Link
         to={"/store-signup"}
-        className='w-full flex items-center justify-center p-3 rounded bg-[#111] text-white mb-7 text-xl font-semibold'
+        className='w-full flex items-center justify-center p-3 rounded bg-[#111] text-white mb-7 mt-2 text-xl font-semibold'
         >
           SignUp as Restron
         </Link>
        </div>
     </div>
+    <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
+          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
+    </div>
+
+   </div>
   </>
   )
 }

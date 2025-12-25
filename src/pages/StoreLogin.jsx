@@ -72,13 +72,13 @@ const StoreLogin = () => {
   return (
     <>
     {loading && <Loading message={message}/>}
-    <div className=' h-screen w-full p-7 flex flex-col items-center justify-between bg-gray-50'>
-       <div className='w-full h-full max-w-md p-5 rounded-lg shadow-md bg-white'>
+    <div className="min-h-screen w-full flex items-center justify-center md:justify-between bg-white">
+       <div className='w-full h-full max-w-md p-5 rounded-lg bg-white min-h-screen'>
           <form className='w-full' onSubmit={(e) => submitHandler(e)}>
-          <img  className='w-20 rounded-2xl mb-2' src="/instaraBarber.jpg" alt="logo" />
+          <img  className='w-20 rounded-2xl mb-2' src="/logo.png" alt="logo" />
           <h3 className='text-2xl mb-2 font-semibold'>Enter your registered email</h3>
           <input 
-              className='w-full p-2 border border-gray-300 rounded bg-[#eeeeee] mb-7 text-lg placeholder:text-base'
+              className='w-full p-2 border border-gray-300 rounded bg-[#eeeeee] mb-7 text-lg placeholder:text-base focus:outline-none focus:ring-2 focus:ring-gray-400'
               type="email"
               placeholder='email@example.com' 
               value={email}
@@ -88,7 +88,7 @@ const StoreLogin = () => {
           />
           <h3 className='text-2xl mb-2 font-semibold'>Enter Password</h3>
           <input 
-              className='w-full p-2 border border-gray-300 rounded bg-[#eeeeee] mb-7 text-lg placeholder:text-base'
+              className='w-full p-2 border border-gray-300  rounded bg-[#eeeeee] mb-7 text-lg placeholder:text-base focus:outline-none focus:ring-2 focus:ring-gray-400'
               type="password"
               placeholder='********' 
               value={password}
@@ -98,7 +98,7 @@ const StoreLogin = () => {
           /> 
           {error && <p className='text-red-500 mb-3 text-sm'>{error}</p>}
           <button
-          className='w-full p-2 rounded mb-4 bg-[#111] text-white text-xl font-semibold'
+          className='w-full p-2 rounded mb-4 bg-pink-600 text-white text-xl font-semibold'
           >
             Login
           </button>
@@ -110,6 +110,9 @@ const StoreLogin = () => {
                       </Link>
           </p>
        </div>
+       <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
+          <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
+        </div>
     </div>
     </>
   )
