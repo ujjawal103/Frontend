@@ -103,7 +103,8 @@ const groupedArray = Object.values(groupedItems);
         tableId,
         username: username.trim() || "Guest",
         items: groupedArray,
-        billingSummary
+        billingSummary,
+        orderMethod: "qr"
       });
       toast.success("Order created successfully");
       navigate("/order-success");
