@@ -31,6 +31,11 @@ import OrderSuccess from './pages/OrderSuccess'
 
 import { App as CapacitorApp } from "@capacitor/app";
 import { useNavigate } from "react-router-dom";
+import TermsAndConditions from './pages/TermsAndConditions'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import RefundAndCancellationPolicy from './pages/RefundAndCancellationPolicy'
+import HelpCenter from './pages/HelpCenter'
+import Support from './pages/Support'
 
 
 
@@ -239,6 +244,24 @@ const navigate = useNavigate();
         } />
 
         <Route path="/order-success" element={<OrderSuccess />} />
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/cancellation-refund-policy' element={<RefundAndCancellationPolicy />} />
+        <Route path='/help' element={<HelpCenter />} />
+        <Route path='/support' element={<Support />} />
 
 
 
