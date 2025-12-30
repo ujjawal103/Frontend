@@ -6,6 +6,7 @@ import MenuItemCard from "../components/MenuItemCard";
 import StoreCartDrawer from "../components/StoreCartDrawer";
 import { StoreDataContext } from "../context/StoreContext";
 import FooterNavStore from "../components/FooterNavStore";
+import CategoryFilterQRBar from "../components/CategoryFilterQRBar";
 
 const StoreMenu = ({ restaurantName = "Your Menu" }) => {
   const [menuItems, setMenuItems] = useState([]);
@@ -16,6 +17,8 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
   const [cartOpen, setCartOpen] = useState(false);
   const {store, setStore} = useContext(StoreDataContext);
   const [tables, setTables] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const storeId = store?._id; // assume storeId saved after login
   const token = localStorage.getItem("token");
@@ -23,7 +26,20 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
   useEffect(() => {
     fetchMenu();
     fetchTables();
+    fetchCategories();
   }, [storeId]);
+
+
+    const fetchCategories = async () => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_BASE_URL}categories/${storeId}`
+    );
+    setCategories(res.data.categories || []);
+  } catch (err) {
+    toast.error("Failed to load categories");
+  }
+};
 
   const fetchMenu = async () => {
     try {
@@ -57,25 +73,21 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
     }
   };
 
-  useEffect(()=>{
-    console.log(tables)
-  }, [tables])
-
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    if (term === "") {
-      const available = menuItems.filter(
-        (item) =>
-          item.available && item.variants.some((v) => v.available === true)
-      );
-      return setFilteredItems(available);
-    }
-    const matched = menuItems.filter((item) =>
-      item.itemName.toLowerCase().includes(term)
-    );
-    setFilteredItems(matched);
-  };
+  // const handleSearch = (e) => {
+  //   const term = e.target.value.toLowerCase();
+  //   setSearchTerm(term);
+  //   if (term === "") {
+  //     const available = menuItems.filter(
+  //       (item) =>
+  //         item.available && item.variants.some((v) => v.available === true)
+  //     );
+  //     return setFilteredItems(available);
+  //   }
+  //   const matched = menuItems.filter((item) =>
+  //     item.itemName.toLowerCase().includes(term)
+  //   );
+  //   setFilteredItems(matched);
+  // };
 
   const addToCart = (item, variant) => {
     if (!item.available || !variant.available)
@@ -121,23 +133,79 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
     });
   };
 
+
+    useEffect(() => {
+    let data = menuItems;
+  
+    // ✅ CATEGORY FILTER
+    if (activeCategory !== "all") {
+      data = data.filter((item) => {
+        if (typeof item.categoryId === "string") {
+          return item.categoryId === activeCategory;
+        }
+        return item.categoryId?._id === activeCategory;
+      });
+    }
+  
+    // ✅ SEARCH BY ITEM NAME OR CATEGORY NAME
+    if (searchTerm.trim()) {
+      data = data.filter((item) => {
+        const itemNameMatch = item.itemName
+          .toLowerCase()
+          .includes(searchTerm);
+  
+        const categoryNameMatch = item.categoryId?.name
+          ?.toLowerCase()
+          .includes(searchTerm);
+  
+        return itemNameMatch || categoryNameMatch;
+      });
+    }
+  
+    // ✅ CUSTOMER RULE: only show available items unless searching
+    if (!searchTerm.trim()) {
+      data = data.filter(
+        (item) =>
+          item.available &&
+          item.variants.some((v) => v.available === true)
+      );
+    }
+  
+    setFilteredItems(data);
+  }, [menuItems, activeCategory, searchTerm]);
+  
+  
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full md:pl-65 mb-20 md:mb-0 p-4 min-h-[100vh] bg-gray-200">
-      <h1 className="text-2xl font-bold text-center mb-2 break-words">
+    <div className="w-full md:pl-65 mb-20 md:mb-0 min-h-[100vh] bg-gray-200 ">
+      <h1 className="text-2xl font-bold text-center mb-2 break-words px-4 pt-4">
         {store.storeName || restaurantName}
       </h1>
 
-      <input
+      <div className="px-4">
+        <input
         type="text"
         value={searchTerm}
         onChange={handleSearch}
-        placeholder="Search items..."
-        className="w-full p-2 rounded-md border mb-4 outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Search items by name or category..."
+        className="w-full p-2 rounded-md border mb-4 outline-none focus:ring-1 focus:border-0 focus:ring-pink-700"
+      />
+      </div>
+
+      {/* Category Filter */}
+      <CategoryFilterQRBar
+        categories={categories}
+        activeCategory={activeCategory}
+        onSelect={setActiveCategory}
       />
 
-      <div className="space-y-3">
+      <div className="px-4 pb-18 md:pb-22">
+        <div className="space-y-3">
         {filteredItems.length === 0 ? (
           <p className="text-center text-gray-500">No items found</p>
         ) : (
@@ -151,6 +219,7 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
             />
           ))
         )}
+      </div>
       </div>
 
       <StoreCartDrawer
@@ -166,7 +235,7 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
       {cart.length > 0 && (
         <button
           onClick={() => setCartOpen(true)}
-          className="fixed bottom-24 md:bottom-10 right-5 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-10"
+          className="fixed bottom-24 md:bottom-10 right-5 bg-pink-600 text-white px-4 py-2 rounded-full shadow-lg z-10"
         >
           View Cart ({new Set(cart.map((i) => i.itemId)).size})
         </button>

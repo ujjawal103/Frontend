@@ -166,17 +166,17 @@ const groupedArray = Object.values(groupedItems);
                           onClick={() =>
                             addToCart(group.itemId, group.itemName, v.type, v.price)
                           }
-                          className="px-3 py-1 rounded text-sm bg-blue-500 text-white"
+                          className="px-3 py-1 rounded text-sm bg-pink-600 text-white"
                         >
                           + Add
                         </button>
                       ) : (
-                        <div className="flex items-center border rounded-md px-2 py-1 bg-gray-50">
+                        <div className="flex items-center border border-pink-600 rounded-md px-2 py-1 bg-gray-50">
                           <button
                             onClick={() =>
                               updateQuantity(group.itemId, v.type, -1)
                             }
-                            className="px-2 text-lg font-semibold text-blue-600"
+                            className="px-2 text-lg font-semibold text-pink-600"
                           >
                             −
                           </button>
@@ -187,7 +187,7 @@ const groupedArray = Object.values(groupedItems);
                             onClick={() =>
                               updateQuantity(group.itemId, v.type, +1)
                             }
-                            className="px-2 text-lg font-semibold text-blue-600"
+                            className="px-2 text-lg font-semibold text-pink-600"
                           >
                             +
                           </button>
@@ -239,7 +239,7 @@ const groupedArray = Object.values(groupedItems);
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter customer name (optional)"
-              className="w-full text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
+              className="w-full text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-pink-400"
             />
           </div>
 
@@ -249,7 +249,7 @@ const groupedArray = Object.values(groupedItems);
           <button
             onClick={handleCheckout}
             disabled={loading}
-            className="fixed md:ml-65 md:mb-0 p-4 bottom-24 md:bottom-2 left-0 ml-[2vw] mr-[2vw] min-w-[96vw] md:min-w-[81vw] bg-blue-600 text-white py-2 rounded-md"
+            className="fixed md:ml-65 md:mb-0 p-4 bottom-24 md:bottom-2 left-0 ml-[2vw] mr-[2vw] min-w-[96vw] md:min-w-[81vw] bg-pink-600 text-white py-2 rounded-md"
           >
             {loading ? "Placing..." : "Create Order"}
           </button>
