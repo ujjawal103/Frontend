@@ -19,7 +19,7 @@ const StoreLogin = () => {
     const [message , setMessage] = useState("");
   
   
-    const submitHandler = async (e) => {
+  const submitHandler = async (e) => {
   e.preventDefault();
   setLoading(true);
   setMessage("Logging In....")
@@ -71,7 +71,7 @@ const StoreLogin = () => {
 
   return (
     <>
-    {loading && <Loading message={message}/>}
+    {loading && <Loading message={message} width="full" />}
     <div className="min-h-screen w-full flex items-center justify-center md:justify-between bg-white">
       <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
           <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>
