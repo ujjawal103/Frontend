@@ -38,6 +38,7 @@ import HelpCenter from './pages/HelpCenter'
 import Support from './pages/Support'
 import RestaurantManagementApp from './pages/RestaurantManagementApp'
 import QRMenuOrdering from './pages/QRMenuOrdering'
+import Landing from './pages/Landing'
 
 
 
@@ -112,7 +113,8 @@ const navigate = useNavigate();
     <div>
       <AppLayout>
       <Routes>
-        <Route path='/' element={<Start />} />
+        {/* <Route path='/' element={<Start />} /> */}
+        <Route path='/' element={<Landing />} />
         {/* <Route path='/login' element={<UserLogin />} />
         <Route path='/signup' element={<UserSignup />} />             */}
 

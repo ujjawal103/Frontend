@@ -82,7 +82,7 @@ const AdminSignup = () => {
     <div className='w-full max-w-md min-h-screen p-5 pb-2 flex flex-col items-start justify-between'>
        <div className='w-full'>
           <form className='w-full' onSubmit={(e) => submitHandler(e)}>
-          <img  className='w-20 rounded-2xl' src="/logo.png" alt="logo" />
+          <img  className='w-20 rounded-2xl' src="/logo.png" alt="Tap Resto Logo" />
           <h3 className='text-2xl mb-2 font-semibold'>Enter your Full name</h3>
           <div className='w-full flex gap-4'>
             <input 
