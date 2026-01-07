@@ -6,6 +6,7 @@ import CartDrawer from "../components/CartDrawer";
 import CategoryFilterQRBar from "../components/CategoryFilterQRBar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Helmet } from 'react-helmet-async'
 
 const Menu = ({ restaurantName = "Demo sweets" }) => {
   const { storeId, tableId } = useParams();
@@ -160,6 +161,17 @@ const handleSearch = (e) => {
 
   return (
     <div className="pb-28 min-h-[100vh] bg-gray-200">
+
+      <Helmet>
+        <title>{store?.storeName || "Store"} Menu – QR Ordering by Tap Resto</title>
+        <meta
+          name="description"
+          content={`View ${store?.storeName || "Store"}'s digital menu and order easily using Tap Resto QR ordering system.`}
+        />
+      </Helmet>
+
+
+
       {/* Navbar */}
       <h1 className="text-2xl font-bold text-center mb-2 px-4 pt-4">
         {store.storeName || restaurantName}

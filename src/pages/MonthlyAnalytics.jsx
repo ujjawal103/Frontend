@@ -7,6 +7,7 @@ import OrderCard from "../components/orders/OrderCard";
 import LoadingSkeleton from "../components/orders/LoadingSkeleton";
 import EmptyStateMessage from "../components/orders/EmptyStateMessage";
 import { Loader2 } from "lucide-react";
+import { Helmet } from 'react-helmet-async'
 
 const MonthlyAnalytics = () => {
   const [analytics, setAnalytics] = useState({
@@ -187,6 +188,13 @@ const MonthlyAnalytics = () => {
 
   return (
     <div className="w-full md:pl-65 mb-20 md:mb-0 p-4 bg-gray-50 min-h-screen text-sm">
+
+      <Helmet>
+        <title>Monthly Analytics – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
+
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-3 mb-4">
         <h2 className="font-semibold text-lg">📅 Monthly Analytics</h2>

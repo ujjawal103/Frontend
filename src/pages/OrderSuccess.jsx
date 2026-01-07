@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import FooterNavStore from "../components/FooterNavStore";
 import { StoreDataContext } from "../context/StoreContext";
+import { Helmet } from 'react-helmet-async'
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
@@ -11,6 +12,11 @@ const OrderSuccess = () => {
 
   return (
     <div className={` ${(store && store.storeName) ? "w-full md:pl-65 mb-20 md:mb-0 p-4" : ""} min-h-screen flex flex-col justify-center items-center bg-green-50 text-center px-4`}>
+      <Helmet>
+        <title>New Order Recieved – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
       {/* Animated Success Icon */}
       <motion.div
         initial={{ scale: 0, opacity: 0 }}

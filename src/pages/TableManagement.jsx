@@ -6,6 +6,7 @@ import TableList from "../components/TableList";
 import AddTableButton from "../components/AddTableButton";
 import FooterNavStore from "../components/FooterNavStore";
 import Loading from "../components/Loading";
+import { Helmet } from 'react-helmet-async'
 
 const TableManagement = () => {
   const [tables, setTables] = useState([]);
@@ -80,6 +81,12 @@ const fetchTables = async () => {
   return (
     <>
       {loading && <Loading message={message} />}
+
+      <Helmet>
+        <title>Table Management – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
 
       <div className="w-full min-h-screen bg-gray-100 md:pl-64 md:pt-8 p-4 mb-20 md:mb-0">
         {/* ✅ Fixed Header */}

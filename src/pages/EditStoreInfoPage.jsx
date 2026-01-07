@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { StoreDataContext } from "../context/StoreContext"; // ✅ your context
 import FooterNavStore from "../components/FooterNavStore";
+import { Helmet } from 'react-helmet-async'
 
 const EditStoreInfoPage = () => {
   const navigate = useNavigate();
@@ -85,6 +86,11 @@ const EditStoreInfoPage = () => {
 
   return (
     <div className="w-full md:pl-65 min-h-screen bg-gray-50 flex flex-col items-center justify-center mb-20 md:mb-0">
+      <Helmet>
+        <title>Edit Store Details – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
       <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-md min-h-screen md:min-h-auto">
         <button
           onClick={() => navigate(-1)}

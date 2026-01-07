@@ -10,6 +10,7 @@ import HomeEndNote from "../components/storeHome/HomeEndNote";
 import QrToggleCard from "../components/storeHome/QrToggleCard";
 import axios from "axios";
 import LeftMenuDrawer from "../components/LeftMenuDrawer";
+import { Helmet } from 'react-helmet-async'
 
 const StoreHome = () => {
   const { store } = useContext(StoreDataContext);
@@ -89,6 +90,11 @@ useEffect(() => {
 
   return (
     <div className="w-full md:pl-60 pb-20 md:pb-0 bg-gray-50 min-h-screen pt-14 md:pt-0">
+      <Helmet>
+        <title>Store Dashboard – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
 
       {/* ===== MOBILE TOP HEADER ===== */}
         <div className="fixed top-0 left-0 w-full h-14 bg-white border-b-2 border-pink-600 shadow-sm flex items-center justify-between px-4 z-50 md:hidden">

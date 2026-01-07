@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Lottie from "lottie-react";
 import LogoutAnim from "../assets/logout.json";
+import { Helmet } from 'react-helmet-async'
 
 const StoreLogout = () => {
 
@@ -29,6 +30,12 @@ const StoreLogout = () => {
 
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-white px-4">
+
+      <Helmet>
+        <title>Logout – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
 
       {/* ⭐ Lottie Animation */}
       <Lottie

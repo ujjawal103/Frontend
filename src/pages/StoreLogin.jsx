@@ -4,6 +4,7 @@ import { StoreDataContext } from '../context/StoreContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Loading from '../components/Loading';
+import { Helmet } from 'react-helmet-async'
 
 const StoreLogin = () => {
 
@@ -72,6 +73,13 @@ const StoreLogin = () => {
   return (
     <>
     {loading && <Loading message={message} width="full" />}
+    <Helmet>
+  <title>Store Login – Tap Resto Restaurant Management App</title>
+  <meta
+    name="description"
+    content="Login to your Tap Resto store dashboard to manage orders, menu, tables, billing and analytics in one place."
+  />
+</Helmet>
     <div className="min-h-screen w-full flex items-center justify-center md:justify-between bg-white">
       <div className="hidden md:flex md:items-center md:justify-center md:w-full md:h-screen">
           <img src="/authBanner.png" alt="banner" className="object-cover w-full h-full"/>

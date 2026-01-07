@@ -7,6 +7,7 @@ import StoreCartDrawer from "../components/StoreCartDrawer";
 import { StoreDataContext } from "../context/StoreContext";
 import FooterNavStore from "../components/FooterNavStore";
 import CategoryFilterQRBar from "../components/CategoryFilterQRBar";
+import { Helmet } from 'react-helmet-async'
 
 const StoreMenu = ({ restaurantName = "Your Menu" }) => {
   const [menuItems, setMenuItems] = useState([]);
@@ -183,6 +184,12 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
 
   return (
     <div className="w-full md:pl-65 mb-20 md:mb-0 min-h-[100vh] bg-gray-200 ">
+
+      <Helmet>
+        <title>Store Menu & Orders – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
       <h1 className="text-2xl font-bold text-center mb-2 break-words px-4 pt-4">
         {store.storeName || restaurantName}
       </h1>

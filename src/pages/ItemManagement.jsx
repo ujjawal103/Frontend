@@ -7,6 +7,7 @@ import AddItemButton from "../components/AddItemButton";
 import FooterNavStore from "../components/FooterNavStore";
 import CategoryFilterBar from "../components/CategoryFilterBar";
 import Loading from "../components/Loading";
+import { Helmet } from 'react-helmet-async'
 
 const ItemManagement = () => {
   const [items, setItems] = useState([]);
@@ -127,6 +128,12 @@ const handleAddCategory = () => {
   return (
     <>
       {loading && <Loading message={message} />}
+
+      <Helmet>
+        <title>Item Management – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
 
       <div className=" min-h-screen bg-gray-100 md:pl-64 md:pt-8 p-0 md:p-4 mb-20 md:mb-0">
         {/* ✅ Fixed Header */}

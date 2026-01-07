@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async'
 
 
 
@@ -8,6 +9,14 @@ const TermsAndConditions = () => {
 
   return (
     <div className="min-h-screen bg-white py-5 px-4">
+      <Helmet>
+      <title>Terms & Conditions – Tap Resto Restaurant Software</title>
+      <meta
+        name="description"
+        content="Read the terms and conditions for using Tap Resto restaurant management platform and services."
+      />
+    </Helmet>
+
       <div className="max-w-4xl mx-auto bg-white rounded-2xl p-6 md:p-10">
         
         {/* Header */}

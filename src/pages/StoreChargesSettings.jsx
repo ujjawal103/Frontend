@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { Loader2, Percent, ReceiptIndianRupee, Building2 } from "lucide-react";
 import { StoreDataContext } from "../context/StoreContext";
 import FooterNavStore from "../components/FooterNavStore";
+import { Helmet } from 'react-helmet-async'
 
 const StoreChargesSettings = () => {
   const { store, setStore } = useContext(StoreDataContext);
@@ -87,6 +88,11 @@ const StoreChargesSettings = () => {
 
   return (
     <div className="w-full md:pl-65 p-4 bg-gray-100 min-h-screen [@media(max-height:656px)]:mb-22">
+      <Helmet>
+        <title>GST & Charges Settings – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
       <div className="max-w-5xl mx-auto mt-0 md:mt-8 mb-12">
         <h2 className="text-2xl font-bold mb-8 flex items-center gap-2 text-gray-800">
           <Building2 className="text-blue-600" /> Store Charges Settings

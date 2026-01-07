@@ -1,11 +1,20 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async'
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white py-5 px-4">
+    <Helmet>
+      <title>Privacy Policy – Tap Resto Restaurant Management App</title>
+      <meta
+        name="description"
+        content="Read Tap Resto’s privacy policy to understand how we collect, use and protect user and restaurant data."
+      />
+    </Helmet>
+
       <div className="max-w-4xl mx-auto bg-white rounded-2xl p-6 md:p-10">
         
         {/* Header */}

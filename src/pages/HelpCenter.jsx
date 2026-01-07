@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async'
 
 const steps = [
   {
@@ -53,6 +54,15 @@ const HelpCenter = () => {
   const navigate = useNavigate();
 
   return (
+   <>
+        <Helmet>
+      <title>Help & User Guide – Tap Resto Restaurant App</title>
+      <meta
+        name="description"
+        content="Learn how to use Tap Resto restaurant management app with step-by-step guides for orders, menu, tables and billing."
+      />
+    </Helmet>
+
     <div className="min-h-screen bg-white py-5 px-4">
       <div className="max-w-5xl mx-auto bg-white rounded-2xl p-6 md:p-10">
 
@@ -119,6 +129,7 @@ const HelpCenter = () => {
 
       </div>
     </div>
+   </>
   );
 };
 

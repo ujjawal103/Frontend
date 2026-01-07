@@ -7,6 +7,7 @@ import OrderCard from "../components/orders/OrderCard";
 import LoadingSkeleton from "../components/orders/LoadingSkeleton";
 import EmptyStateMessage from "../components/orders/EmptyStateMessage";
 import { Loader2 } from "lucide-react";
+import { Helmet } from 'react-helmet-async'
 
 const StoreOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -165,6 +166,11 @@ const StoreOrders = () => {
 
   return (
     <div className="w-full md:pl-65 mb-20 md:mb-0 p-4 bg-gray-50 min-h-screen text-sm">
+      <Helmet>
+        <title>All Orders – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
       <h2 className="font-semibold text-lg mb-1">📦 Store Orders History</h2>
       {duration && <p className="text-gray-500 text-xs mb-4 italic">{duration}</p>}
 

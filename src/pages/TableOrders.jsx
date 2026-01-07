@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import TableOrderAnalytics from "../components/TableOrderAnalytics";
 import FooterNavStore from "../components/FooterNavStore";
+import { Helmet } from 'react-helmet-async'
 
 const TablesOrders = () => {
   const [tables, setTables] = useState([]);
@@ -28,6 +29,11 @@ const TablesOrders = () => {
 
   return (
     <div className="w-full md:pl-65 mb-20 md:mb-0 p-4 bg-gray-200 min-h-screen mb-20 md:mb-0 relative">
+      <Helmet>
+        <title>Table Analytics – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
+
       <h2 className="font-semibold text-lg mb-3">🍽️ All Tables</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

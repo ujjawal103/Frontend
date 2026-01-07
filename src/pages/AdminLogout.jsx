@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { Helmet } from 'react-helmet-async'
 
 const AdminLogout = () => {
 
@@ -26,6 +27,10 @@ const AdminLogout = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Logout – Tap Resto</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Helmet>
       Admin LogOut
     </div>
   )
