@@ -164,10 +164,7 @@ const handleSearch = (e) => {
 
       <Helmet>
         <title>{store?.storeName || "Store"} Menu – QR Ordering by Tap Resto</title>
-        <meta
-          name="description"
-          content={`View ${store?.storeName || "Store"}'s digital menu and order easily using Tap Resto QR ordering system.`}
-        />
+        <meta name="robots" content="noindex,nofollow" />
       </Helmet>
 
 

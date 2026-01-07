@@ -36,6 +36,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import RefundAndCancellationPolicy from './pages/RefundAndCancellationPolicy'
 import HelpCenter from './pages/HelpCenter'
 import Support from './pages/Support'
+import RestaurantManagementApp from './pages/RestaurantManagementApp'
+import QRMenuOrdering from './pages/QRMenuOrdering'
 
 
 
@@ -262,8 +264,11 @@ const navigate = useNavigate();
         <Route path='/support' element={<Support />} />
 
 
+        {/* seo page */}
 
-    
+        <Route path='/restaurant-management-app' element={<RestaurantManagementApp />} />
+        <Route path='/qr-menu-ordering' element={<QRMenuOrdering />} />
+
         <Route path="*" element={<NotFound />} />
 
       </Routes>
