@@ -26,7 +26,7 @@ const HeroSection = () => {
             We’re exactly what you’ve been
             <span className="text-brand-pink"> looking for.</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+          {/* <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             QR ordering, billing & revenue management — made simple for every cafe, stall, bar or hotel. Fast, beautiful, and incredibly affordable.
           </p>
 
@@ -51,7 +51,7 @@ const HeroSection = () => {
                 {item}
               </motion.li>
             ))}
-          </ul>
+          </ul> */}
 
           <div className="flex flex-col sm:flex-row gap-4">
             <motion.a 
