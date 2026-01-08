@@ -42,7 +42,7 @@ const TopNav = ({ isSticky }) => {
         <div className="flex items-center gap-3">
           {/* Login */}
           <a
-            href="/store-login"
+            href="/store-home"
             className="
               text-brand-pink font-bold
               px-4 py-2

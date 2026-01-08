@@ -39,6 +39,8 @@ import Support from './pages/Support'
 import RestaurantManagementApp from './pages/RestaurantManagementApp'
 import QRMenuOrdering from './pages/QRMenuOrdering'
 import Landing from './pages/Landing'
+import PricingPage from './pages/PricingPage'
+import SubscriptionSuccess from './pages/SubscriptionSuccess'
 
 
 
@@ -209,13 +211,17 @@ const navigate = useNavigate();
         
         <Route path='/store-login' element={<StoreLogin />} />
 
-        <Route path='/store-signup' element={
+        {/* <Route path='/store-signup' element={
           <AdminProtectedWrapper>
             <StoreSignup />
           </AdminProtectedWrapper>
         }
-        />
+        /> */}
 
+        <Route path='/store-signup' element={
+            <StoreSignup />
+        }
+        />
 
 
 
@@ -242,6 +248,18 @@ const navigate = useNavigate();
         <Route path='/gst-charges' element={
           <StoreProtectedWrapper>
             <StoreChargesSettings />
+          </StoreProtectedWrapper>
+        } />
+
+        <Route path="/pricing" element={
+          <StoreProtectedWrapper>
+            <PricingPage />
+          </StoreProtectedWrapper>
+        } />
+
+        <Route path="/subscription-confirmed" element={
+          <StoreProtectedWrapper>
+            <SubscriptionSuccess />
           </StoreProtectedWrapper>
         } />
 
