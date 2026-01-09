@@ -19,7 +19,7 @@ const plans = [
     price: "0",
     duration: "",
     description: "Try before you pay.",
-    cta: "Start Free Demo",
+    cta: "Start 30 Day's Free Demo",
     type: "free",
     link: "/store-home",
     features: [
@@ -28,25 +28,6 @@ const plans = [
       "Order Flow Demo",
       "Dashboard Preview",
       "WhatsApp Support",
-    ],
-  },
-  {
-    id: "monthly",
-    title: "Monthly Plan",
-    price: "249",
-    amount: 1,
-    duration: "/month",
-    description: "Pay monthly. Cancel anytime.",
-    cta: "Pay ₹249 / month",
-    type: "paid",
-    features: [
-      "Unlimited QR menus",
-      "Unlimited Items",
-      "GST Billing",
-      "Order Management",
-      "Analytics Dashboard",
-      "WhatsApp Support",
-      "Multi-device Cloud Sync"
     ],
   },
   {
@@ -67,6 +48,25 @@ const plans = [
       "Revenue Analytics Dashboard",
       "24/7 WhatsApp Support",
       "Multi-device Cloud Sync",
+    ],
+  },
+  {
+    id: "monthly",
+    title: "Monthly Plan",
+    price: "249",
+    amount: 1,
+    duration: "/month",
+    description: "Pay monthly. Cancel anytime.",
+    cta: "Pay ₹249 / month",
+    type: "paid",
+    features: [
+      "Unlimited QR menus",
+      "Unlimited Items",
+      "GST Billing",
+      "Order Management",
+      "Analytics Dashboard",
+      "WhatsApp Support",
+      "Multi-device Cloud Sync"
     ],
   },
 ];
