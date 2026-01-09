@@ -57,10 +57,10 @@ const HeroSection = () => {
             <motion.a 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="https://wa.me/919628316081?text=Hi%20Tap%20Resto%2C%20I%27d%20like%20a%20demo"
+              href="/store-home"
               className="px-8 py-4 bg-brand-pink text-white rounded-2xl font-bold text-lg shadow-xl shadow-pink-200 flex items-center justify-center gap-2"
             >
-              Start Free Demo
+              Start 30 Day's Free Demo
             </motion.a>
             <motion.a 
               whileHover={{ scale: 1.05 }}

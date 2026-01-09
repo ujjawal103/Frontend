@@ -58,7 +58,7 @@ const TopNav = ({ isSticky }) => {
 
           {/* Primary CTA */}
           <a
-            href="https://wa.me/919628316081?text=Hi%20Tap%20Resto%2C%20I%27d%20like%20a%20demo"
+            href="/store-home"
             className="
               bg-brand-pink text-white
               px-5 py-2.5
