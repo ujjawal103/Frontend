@@ -303,7 +303,7 @@ const PricingCard = ({ gridsize }) => {
       {/* Horizontal scroll container */}
       <div
         className={`
-            flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide
+            flex gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide
             max-w-6xl mx-auto
 
             ${gridsize

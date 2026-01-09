@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useRef } from "react";
+
 
 const features = [
   {
@@ -36,6 +38,30 @@ const features = [
 ];
 
 const KeyFeaturesGrid = () => {
+  const scrollRef = useRef(null);
+
+useEffect(() => {
+  const container = scrollRef.current;
+  if (!container) return;
+
+  let index = 0;
+
+  const interval = setInterval(() => {
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+
+    const cardWidth = container.firstChild?.offsetWidth || 0;
+    index = (index + 1) % features.length;
+
+    container.scrollTo({
+      left: cardWidth * index,
+      behavior: "smooth",
+    });
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, []);
+
   return (
     <section id="features" className="py-24 bg-white px-6">
       <div className="container mx-auto">
@@ -48,7 +74,18 @@ const KeyFeaturesGrid = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          ref={scrollRef}
+            className="
+              flex gap-6
+              overflow-x-auto
+              overflow-y-hidden
+              snap-x snap-mandatory
+              scrollbar-hide
+              md:grid md:grid-cols-2 lg:grid-cols-3
+              md:overflow-visible
+            "
+          >
           {features.map((feature, i) => (
             <motion.div 
               key={i}
@@ -57,13 +94,13 @@ const KeyFeaturesGrid = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
-              className="p-8 rounded-3xl bg-brand-light border border-pink-100 hover:border-brand-pink/30 hover:shadow-xl transition-all"
+              className="snap-center min-w-[100%] sm:min-w-[380px] md:min-w-0 p-8 rounded-3xl bg-pink-600 text-white md:bg-brand-light border border-pink-100 hover:border-brand-pink/30 hover:shadow-xl transition-all"
             >
-              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-brand-pink shadow-md mb-6">
+              <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center text-brand-pink shadow-md mb-6">
                 <feature.icon className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-brand-dark mb-3">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+              <h3 className="text-2xl font-bold text-yellow-400 md:text-brand-dark mb-3">{feature.title}</h3>
+              <p className="text-white leading-relaxed md:text-gray-600">{feature.desc}</p>
             </motion.div>
           ))}
         </div>
