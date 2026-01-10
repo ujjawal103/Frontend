@@ -7,7 +7,7 @@ const MobileTopHeader = ({
   rightLabel = "Today",
 }) => {
   return (
-    <div className="fixed top-0 left-0 w-full h-14 bg-white border-b-2 border-pink-600 shadow-sm flex items-center justify-between px-4 z-50 md:hidden">
+    <div className="fixed top-0 left-0 w-full h-14 bg-white border-b-2 border-pink-600 shadow-sm flex items-center justify-between px-4 z-40 md:hidden">
       
       {/* Left: Hamburger + Logo */}
       <div className="flex items-center gap-3">
