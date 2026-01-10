@@ -10,8 +10,6 @@ import { useState } from "react";
 
 
 
-
-
 const plans = [
   {
     id: "free",
@@ -250,7 +248,7 @@ const PricingCard = ({ gridsize }) => {
 
   return (
     <section id="pricing" className="py-10 md:py-20 bg-brand-light px-4">
-      <div className="text-center mb-14">
+      <div className={`text-center mb-14 ${gridsize ? "mt-10 md:mt-0" : ""}`}>
         <h2 className="text-4xl font-extrabold text-brand-dark mb-3">
           Simple, Transparent Pricing
         </h2>

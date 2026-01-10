@@ -11,6 +11,8 @@ import QrToggleCard from "../components/storeHome/QrToggleCard";
 import axios from "axios";
 import LeftMenuDrawer from "../components/LeftMenuDrawer";
 import { Helmet } from 'react-helmet-async'
+import MobileTopHeader from "../components/MobileTopHeader";
+
 
 const StoreHome = () => {
   const { store } = useContext(StoreDataContext);
@@ -19,10 +21,11 @@ const StoreHome = () => {
   const [todayOrdersCount, setTodayOrdersCount] = useState(0);
   const [todayRevenue, setTodayRevenue] = useState(0);
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
+  const [bannerImage , setBannerImage] = useState("/defaultBanner.png");
 
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-const storeToken = localStorage.getItem("token");
+  const storeToken = localStorage.getItem("token");
 
 const fetchTodayOrders = async () => {
   try {
@@ -57,6 +60,11 @@ useEffect(() => {
 }, []);
 
 
+useEffect(() => {
+  if (store?.storeDetails?.bannerImage) {
+    setBannerImage(store.storeDetails?.bannerImage);
+  }
+}, [store?.storeDetails?.bannerImage]);
 
 
 useEffect(() => {
@@ -85,8 +93,7 @@ useEffect(() => {
 
   if (!store) return <LoadingSkeleton />;
 
-  const bannerImage =
-    store.storeDetails?.photo || "/defaultBanner.png";
+  
 
   return (
     <div className="w-full md:pl-60 pb-20 md:pb-0 bg-gray-50 min-h-screen pt-14 md:pt-0">
@@ -97,24 +104,11 @@ useEffect(() => {
 
 
       {/* ===== MOBILE TOP HEADER ===== */}
-        <div className="fixed top-0 left-0 w-full h-14 bg-white border-b-2 border-pink-600 shadow-sm flex items-center justify-between px-4 z-50 md:hidden">
+        <MobileTopHeader
+          revenue={todayRevenue}
+          onMenuClick={() => setIsLeftDrawerOpen(true)}
+        />
 
-          {/* Left: Hamburger + Logo */}
-          <div className="flex items-center gap-3">
-            <button onClick={() => setIsLeftDrawerOpen(true)}>
-              ☰
-            </button>
-            <img src="/tapResto.png" alt="Tap Resto" className="h-8" />
-          </div>
-
-          {/* Right: Revenue */}
-          <div className="text-right">
-            <p className="text-xs text-gray-500">Today</p>
-            <p className="text-sm font-semibold text-green-800">
-              ₹ {todayRevenue.toFixed(2)}
-            </p>
-          </div>
-        </div>
 
       {/* ===== HERO / BANNER ===== */}
       <div className="relative h-52 md:h-64 w-full">
