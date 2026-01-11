@@ -1,8 +1,42 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
+
 
 const HeroSection = () => {
+const messages = [
+  {
+    text: "Exactly what you’re",
+    highlight: "looking for"
+  },
+  {
+    text: "Instant",
+    highlight: "QR Ordering",
+    suffix: "for customers"
+  },
+  {
+    text: "Smart",
+    highlight: "WhatsApp Billing",
+    suffix: "made simple"
+  },
+  {
+    text: "Run your business from",
+    highlight: "anywhere"
+  }
+];
+
+
+
+const [index, setIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setIndex((prev) => (prev + 1) % messages.length);
+  }, 2500);
+
+  return () => clearInterval(interval);
+}, []);
+
   return (
     <section className="relative pt-25 pb-20 lg:pt-32 lg:pb-32 px-10 bg-brand-light">
 
@@ -18,14 +52,29 @@ const HeroSection = () => {
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block bg-brand-yellow/20 text-brand-pink font-bold px-4 py-1.5 rounded-full text-sm mb-6"
+            className="hidden md:inline-block bg-brand-yellow/20 text-brand-pink font-bold px-4 py-1.5 rounded-full md:flex md:text-sm mb-6"
           >
             ✨ The Smart Way to Manage Your Restaurant
           </motion.span>
-          <h1 className="text-5xl lg:text-7xl font-extrabold text-brand-dark leading-tight mb-6">
-            We’re exactly what you’ve been
-            <span className="text-brand-pink"> looking for.</span>
+          <h1 className="text-5xl lg:text-7xl font-extrabold text-brand-dark leading-tight mb-10 min-h-[240px] lg:min-h-[180px] flex items-center">
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="block"
+            >
+              {messages[index].text}{" "}
+              <span className="text-brand-pink">
+                {messages[index].highlight}
+              </span>
+              {messages[index].suffix && ` ${messages[index].suffix}`}
+              <span className="text-brand-pink">.</span>
+            </motion.span>
+
           </h1>
+
+          
           {/* <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             QR ordering, billing & revenue management — made simple for every cafe, stall, bar or hotel. Fast, beautiful, and incredibly affordable.
           </p>
