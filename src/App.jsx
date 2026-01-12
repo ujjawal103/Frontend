@@ -41,6 +41,7 @@ import QRMenuOrdering from './pages/QRMenuOrdering'
 import Landing from './pages/Landing'
 import PricingPage from './pages/PricingPage'
 import SubscriptionSuccess from './pages/SubscriptionSuccess'
+import LastOrderPage from './pages/LastOrderPage'
 
 
 
@@ -146,6 +147,9 @@ const navigate = useNavigate();
           <Route path='/order/:storeId/:tableId' element={
             <Menu/>
           } />
+
+          <Route path="/last-order" element={<LastOrderPage />} />
+
 
           <Route path='/store-menu' element={
             <StoreProtectedWrapper>
