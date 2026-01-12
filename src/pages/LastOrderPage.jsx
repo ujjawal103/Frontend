@@ -59,7 +59,7 @@ const LastOrderPage = () => {
 
         <p className="text-xs break-words">
           <strong>Order ID:</strong> {order._id} <br />
-          <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"} <br />
+          {/* <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"} <br /> */}
           <strong>Customer:</strong> {order.username || "Guest"} <br />
           <strong>Date:</strong>{" "}
           {new Date(order.createdAt).toLocaleString()}
