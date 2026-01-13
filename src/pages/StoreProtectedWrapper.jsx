@@ -41,7 +41,7 @@ const StoreProtectedWrapper = ({ children }) => {
     .catch(error => {
         localStorage.removeItem('token');
         navigate("/store-login");
-        toast.error("Something went wrong !");
+        toast.error("Please login again");
         setIsLoading(false);
         setStore({});
     });
