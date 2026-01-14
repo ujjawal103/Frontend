@@ -43,7 +43,7 @@ import PricingPage from './pages/PricingPage'
 import SubscriptionSuccess from './pages/SubscriptionSuccess'
 import LastOrderPage from './pages/LastOrderPage'
 import OtpVerifyWrapper from './components/otp/OtpVerifyWrapper'
-import ForgotPassword from './components/otp/forgotPassword'
+import ForgotPassword from './components/otp/ForgotPassword'
 import ResetPassword from './components/otp/ResetPassword'
 
 
