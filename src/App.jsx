@@ -42,6 +42,9 @@ import Landing from './pages/Landing'
 import PricingPage from './pages/PricingPage'
 import SubscriptionSuccess from './pages/SubscriptionSuccess'
 import LastOrderPage from './pages/LastOrderPage'
+import OtpVerifyWrapper from './components/otp/OtpVerifyWrapper'
+import ForgotPassword from './components/otp/forgotPassword'
+import ResetPassword from './components/otp/ResetPassword'
 
 
 
@@ -226,6 +229,12 @@ const navigate = useNavigate();
             <StoreSignup />
         }
         />
+
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<OtpVerifyWrapper />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+
 
 
 
