@@ -12,7 +12,8 @@ const CartDrawer = ({ open, setOpen, cart, setCart, storeId, tableId, store }) =
   if (!open) return null;
 
 
-  
+
+
   
 
   // --- Helper functions ---
@@ -151,6 +152,13 @@ const groupedArray = Object.values(groupedItems);
 
   const handleCheckout = async () => {
   if (cart.length === 0) return toast.error("Cart is empty");
+  // --- Validate WhatsApp number ---
+  console.log("Validating WhatsApp number:", whatsapp);
+  const whatsappPattern = /^[6-9]\d{9}$/;
+  if (!whatsapp.trim() || !whatsappPattern.test(whatsapp.trim())) {
+    setWhatsappError("Please enter a valid 10-digit WhatsApp number");
+    return;
+  }
 
   try {
     setLoading(true);
@@ -202,6 +210,9 @@ const groupedArray = Object.values(groupedItems);
               "pendingPayment",
               JSON.stringify({
                 razorpayOrderId: data.razorpayOrderId, // ✅ SAFE
+                whatsapp: whatsapp.trim(),
+                storeName: store.storeName,
+                storeDetails: store.storeDetails,
                 mode: "qr-pay-first",
               })
             );
@@ -255,6 +266,9 @@ const groupedArray = Object.values(groupedItems);
     setLoading(false);
   }
 };
+
+
+  
 
 
   // --- UI ---
@@ -370,7 +384,8 @@ const groupedArray = Object.values(groupedItems);
               setWhatsapp(e.target.value);
               if (whatsappError) setWhatsappError("");
             }}
-            placeholder="Enter WhatsApp number (optional)"
+            placeholder="To Receive Invoice, Enter WhatsApp Number"
+            required
             className="w-full text-sm p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-pink-400 mt-2"
           />
           {whatsappError && (

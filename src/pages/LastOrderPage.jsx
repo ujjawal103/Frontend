@@ -1,9 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LastOrderPage = () => {
   const [order, setOrder] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+  const pending = JSON.parse(localStorage.getItem("pendingPayment"));
+  if (!pending?.razorpayOrderId) return;
+
+  const fetchOrder = async () => {
+    try {
+      console.log("Fetching order for Razorpay Order ID:", pending.razorpayOrderId);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}orders/by-razorpay-order/${pending.razorpayOrderId}`,
+      );
+
+      console.log("Fetched order data:", data);
+      const enrichedOrder = {
+        ...data.order,
+        storeDetails: {
+          storeName: pending.storeName,
+          storeDetails: pending.storeDetails,
+        },
+      };
+
+      localStorage.setItem("lastOrder", JSON.stringify(enrichedOrder));
+      localStorage.removeItem("pendingPayment");
+
+    } catch {
+    }
+  };
+
+  fetchOrder();
+}, []);
 
   useEffect(() => {
     const stored = localStorage.getItem("lastOrder");
@@ -64,6 +95,7 @@ const LastOrderPage = () => {
           <strong>Date:</strong>{" "}
           {new Date(order.createdAt).toLocaleString()}
         </p>
+        <strong className="text-xs">Payment Method:</strong> <span className="text-xs">{order.paymentMethod || "N/A"}</span>
 
         <div className="border-b border-dashed border-gray-300 my-2" />
 

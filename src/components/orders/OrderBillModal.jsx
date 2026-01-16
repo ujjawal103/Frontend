@@ -175,6 +175,7 @@ const OrderBillModal = ({ orderId, setOrders, onClose }) => {
           <strong>Customer:</strong> {order.username || "Guest"} <br />
           <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}
         </p>
+        <strong className="text-xs">Payment Method:</strong> <span className="text-xs">{order.paymentMethod || "N/A"}</span>
         <div className="line my-2 border-b border-dashed border-gray-300"></div>
 
         {/* Items List */}

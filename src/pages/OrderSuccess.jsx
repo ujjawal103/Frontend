@@ -6,6 +6,7 @@ import FooterNavStore from "../components/FooterNavStore";
 import { StoreDataContext } from "../context/StoreContext";
 import { Helmet } from 'react-helmet-async'
 import { useEffect } from "react";
+import axios from "axios";
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
@@ -17,13 +18,22 @@ useEffect(() => {
 
   const fetchOrder = async () => {
     try {
+      console.log("Fetching order for Razorpay Order ID:", pending.razorpayOrderId);
       const { data } = await axios.get(
-        `${BASE_URL}/orders/by-razorpay-order/${pending.razorpayOrderId}`
+        `${import.meta.env.VITE_BASE_URL}orders/by-razorpay-order/${pending.razorpayOrderId}`,
       );
 
-      localStorage.setItem("lastOrder", JSON.stringify(data.order));
+      console.log("Fetched order data:", data);
+      const enrichedOrder = {
+        ...data.order,
+        storeDetails: {
+          storeName: pending.storeName,
+          storeDetails: pending.storeDetails,
+        },
+      };
+
+      localStorage.setItem("lastOrder", JSON.stringify(enrichedOrder));
       localStorage.removeItem("pendingPayment");
-      setOrder(data.order);
 
     } catch {
       // webhook not arrived yet → retry
