@@ -90,61 +90,172 @@ const groupedArray = Object.values(groupedItems);
   const total = subTotal + gstAmount + restaurantChargeAmount;
 
   // --- Checkout ---
-  const handleCheckout = async () => {
-   if (cart.length === 0) return toast.error("Cart is empty");
-    try {
-      setLoading(true);
+  // const handleCheckout = async () => {
+  //  if (cart.length === 0) return toast.error("Cart is empty");
+  //   try {
+  //     setLoading(true);
 
-      const billingSummary = {
-        subTotal,
-        gstApplicable,
-        gstRate,
-        restaurantChargeApplicable,
-        restaurantCharge,
-        gstAmount,
-        restaurantChargeAmount,
-        totalAmount: total
+  //     const billingSummary = {
+  //       subTotal,
+  //       gstApplicable,
+  //       gstRate,
+  //       restaurantChargeApplicable,
+  //       restaurantCharge,
+  //       gstAmount,
+  //       restaurantChargeAmount,
+  //       totalAmount: total
+  //     };
+
+  //     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}orders/create`, {
+  //       storeId,
+  //       tableId,
+  //       username: username.trim() || "Guest",
+  //       whatsapp: whatsapp.trim(),
+  //       items: groupedArray,
+  //       billingSummary,
+  //       orderMethod: "qr"
+  //     });
+  //     toast.success("Order created successfully");
+      
+  //     navigate("/order-success");
+  //     setCart([]);
+  //     setOpen(false);
+      
+      
+  //     const enrichedOrder = {
+  //       ...data.order,
+
+  //       // 👇 full store details injected from frontend state
+  //       storeDetails: {
+  //         storeName: store.storeName,
+  //         storeDetails: store.storeDetails, // address, phone, photo etc
+  //       }
+  //     };
+
+  //     localStorage.setItem("lastOrder", JSON.stringify(enrichedOrder));
+
+  //   } catch (err) {
+  //      const message = err.response?.data?.message;
+  //      if (message && message.toLowerCase().includes("valid 10-digit")) {
+  //         setWhatsappError(message);
+  //      } else {
+  //         toast.error(message || "Failed to create order");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+
+
+  const handleCheckout = async () => {
+  if (cart.length === 0) return toast.error("Cart is empty");
+
+  try {
+    setLoading(true);
+
+    const billingSummary = {
+      subTotal,
+      gstApplicable,
+      gstRate,
+      restaurantChargeApplicable,
+      restaurantCharge,
+      gstAmount,
+      restaurantChargeAmount,
+      totalAmount: total,
+    };
+
+    const payload = {
+      storeId,
+      tableId,
+      username: username.trim() || "Guest",
+      whatsapp: whatsapp.trim(),
+      items: groupedArray,
+      billingSummary,
+      orderMethod: "qr",
+    };
+
+    // 🔥 DECISION POINT
+    if (store?.qrPayFirstEnabled) {
+      /* ===========================
+         💳 PAY-FIRST FLOW
+      =========================== */
+
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}orders/create-payment-intent`,
+        payload
+      );
+
+      // 👉 open Razorpay checkout
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY,
+        amount: data.amount,
+        currency: data.currency,
+        order_id: data.razorpayOrderId,
+        name: store.storeName,
+        description: `Table ${data.tableNumber}`,
+        handler: function () {
+          toast.success("Payment successful");
+
+            localStorage.setItem(
+              "pendingPayment",
+              JSON.stringify({
+                razorpayOrderId: data.razorpayOrderId, // ✅ SAFE
+                mode: "qr-pay-first",
+              })
+            );
+
+          setCart([]);
+          setOpen(false);
+          navigate("/order-success");
+        },
+        prefill: {
+          name: username || "Guest",
+          contact: whatsapp || "",
+        },
+        theme: {
+          color: "#ec4899",
+        },
       };
 
-      const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}orders/create`, {
-        storeId,
-        tableId,
-        username: username.trim() || "Guest",
-        whatsapp: whatsapp.trim(),
-        items: groupedArray,
-        billingSummary,
-        orderMethod: "qr"
-      });
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+
+    } else {
+      /* ===========================
+         🧾 NORMAL QR ORDER FLOW
+      =========================== */
+
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}orders/create`,
+        payload
+      );
+
       toast.success("Order created successfully");
-      
-      navigate("/order-success");
       setCart([]);
       setOpen(false);
-      
-      
+
       const enrichedOrder = {
         ...data.order,
-
-        // 👇 full store details injected from frontend state
         storeDetails: {
           storeName: store.storeName,
-          storeDetails: store.storeDetails, // address, phone, photo etc
-        }
+          storeDetails: store.storeDetails,
+        },
       };
 
       localStorage.setItem("lastOrder", JSON.stringify(enrichedOrder));
-
-    } catch (err) {
-       const message = err.response?.data?.message;
-       if (message && message.toLowerCase().includes("valid 10-digit")) {
-          setWhatsappError(message);
-       } else {
-          toast.error(message || "Failed to create order");
-      }
-    } finally {
-      setLoading(false);
+      navigate("/order-success");
     }
-  };
+
+  } catch (err) {
+    const message = err.response?.data?.message;
+    toast.error(message || "Checkout failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // --- UI ---
   return (

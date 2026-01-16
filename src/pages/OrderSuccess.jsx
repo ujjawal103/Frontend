@@ -5,10 +5,36 @@ import { useNavigate } from "react-router-dom";
 import FooterNavStore from "../components/FooterNavStore";
 import { StoreDataContext } from "../context/StoreContext";
 import { Helmet } from 'react-helmet-async'
+import { useEffect } from "react";
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
   const {store , setStore} = React.useContext(StoreDataContext);
+
+useEffect(() => {
+  const pending = JSON.parse(localStorage.getItem("pendingPayment"));
+  if (!pending?.razorpayOrderId) return;
+
+  const fetchOrder = async () => {
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}/orders/by-razorpay-order/${pending.razorpayOrderId}`
+      );
+
+      localStorage.setItem("lastOrder", JSON.stringify(data.order));
+      localStorage.removeItem("pendingPayment");
+      setOrder(data.order);
+
+    } catch {
+      // webhook not arrived yet → retry
+      setTimeout(fetchOrder, 2000);
+    }
+  };
+
+  fetchOrder();
+}, []);
+
+
 
   return (
     <div className={` ${(store && store.storeName) ? "w-full md:pl-65 mb-20 md:mb-0 p-4" : ""} min-h-screen flex flex-col justify-center items-center bg-green-50 text-center px-4`}>
