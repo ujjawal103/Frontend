@@ -12,6 +12,7 @@ import axios from "axios";
 import LeftMenuDrawer from "../components/LeftMenuDrawer";
 import { Helmet } from 'react-helmet-async'
 import MobileTopHeader from "../components/MobileTopHeader";
+import QrPayFirstToggleCard from "../components/storeHome/QrPayFirstToggleCard";
 
 
 const StoreHome = () => {
@@ -264,6 +265,10 @@ useEffect(() => {
       {/* QR ORDERING TOGGLE */}
       <div className="p-2 lg:px-60">
         <QrToggleCard />
+      </div>
+
+      <div className="p-3 md:pr-8">
+        <QrPayFirstToggleCard />
       </div>
 
        <div className="pt-4">

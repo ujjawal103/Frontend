@@ -7,7 +7,6 @@ import {
   FaChair,
   FaClipboardList,
   FaTable,
-  FaCalendarCheck,
   FaFileInvoiceDollar ,
   FaClock,
   FaChartLine,
@@ -19,7 +18,8 @@ import {
   FaShieldAlt,
   FaUndoAlt,
   FaFileContract,
-  FaTags      
+  FaTags,
+  FaWallet      
 } from "react-icons/fa";
 import axios from "axios";
 import Loading from "./Loading";
@@ -497,6 +497,24 @@ export default function FooterNavStore() {
             >
               <FaChartLine size={22} />
               <span className="text-sm">Monthly Analytics</span>
+            </Link>
+          </div>
+
+          {/* QR Settlements */}
+          <div
+            className={`hidden md:w-60 md:flex cursor-pointer ${
+              isActive("/store-settlement")
+                ? "md:bg-gray-800" : "md:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/store-settlement"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/store-settlement") ? "border-t" : ""
+              } w-full p-4`}
+            >
+              <FaWallet size={22} />
+              <span className="text-sm">QR Settlement's</span>
             </Link>
           </div>
 

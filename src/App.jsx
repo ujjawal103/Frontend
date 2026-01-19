@@ -45,6 +45,10 @@ import LastOrderPage from './pages/LastOrderPage'
 import OtpVerifyWrapper from './components/otp/OtpVerifyWrapper'
 import ForgotPassword from './components/otp/ForgotPassword'
 import ResetPassword from './components/otp/ResetPassword'
+import StoreSettlements from './pages/StoreSettlement'
+import AdminSettlementPage from './pages/admin/AdminSettlementPage'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminStoreDetails from './pages/admin/AdminStoreDetails'
 
 
 
@@ -128,11 +132,33 @@ const navigate = useNavigate();
       <Route path='/admin-login' element={<AdminLogin />} />
       {/* <Route path='/admin-signup' element={<AdminSignup />} /> */}
 
-       <Route path='/logout' element={
+       <Route path='/admin-logout' element={
           <AdminProtectedWrapper>
             <AdminLogout />
           </AdminProtectedWrapper>
         } />
+
+        <Route path='/admin-dashboard' element={
+          <AdminProtectedWrapper>
+            <AdminDashboard />
+          </AdminProtectedWrapper>
+        }
+        />
+
+        <Route path='/admin/stores/:storeId' element={
+          <AdminProtectedWrapper>
+            <AdminStoreDetails />
+          </AdminProtectedWrapper>
+        }
+        />
+
+
+        <Route path='/admin/settlements/:storeId' element={
+          <AdminProtectedWrapper>
+            <AdminSettlementPage />
+          </AdminProtectedWrapper>
+        }
+        />
 
 
 
@@ -267,6 +293,12 @@ const navigate = useNavigate();
         <Route path="/pricing" element={
           <StoreProtectedWrapper>
             <PricingPage />
+          </StoreProtectedWrapper>
+        } />
+
+        <Route path="/store-settlement" element={
+          <StoreProtectedWrapper>
+            <StoreSettlements />
           </StoreProtectedWrapper>
         } />
 
