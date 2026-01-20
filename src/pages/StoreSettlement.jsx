@@ -56,7 +56,7 @@ const StoreSettlements = () => {
         <input
           type="date"
           value={date}
-          max={new Date().toISOString().split("T")[0]}
+          max={new Date(Date.now() - 86400000).toISOString().split("T")[0]}
           onChange={(e) => setDate(e.target.value)}
           onClick={(e) => e.target.showPicker && e.target.showPicker()}
           className="border p-2 rounded-md text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400"
