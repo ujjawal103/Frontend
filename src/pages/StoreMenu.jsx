@@ -95,12 +95,12 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
       return toast.error("This item is unavailable");
 
     const existing = cart.find(
-      (c) => c.itemId === item._id && c.variant === variant.name
+      (c) => c.itemId === item._id && c.variant === variant.name && c.variantId === variant._id 
     );
     let updatedCart;
     if (existing) {
       updatedCart = cart.map((c) =>
-        c.itemId === item._id && c.variant === variant.name
+        c.itemId === item._id && c.variant === variant.name && c.variantId === variant._id
           ? { ...c, quantity: c.quantity + 1 }
           : c
       );
@@ -110,6 +110,7 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
         {
           itemId: item._id,
           itemName: item.itemName,
+          variantId: variant._id,
           variant: variant.name,
           price: variant.price,
           quantity: 1,
@@ -119,11 +120,11 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
     setCart(updatedCart);
   };
 
-  const updateQuantity = (itemId, variantName, change) => {
+  const updateQuantity = (itemId, variantId, variantName, change) => {
     setCart((prev) => {
       const updated = prev
         .map((c) => {
-          if (c.itemId === itemId && c.variant === variantName) {
+          if (c.itemId === itemId && c.variant === variantName && c.variantId === variantId) {
             const newQuantity = c.quantity + change;
             return { ...c, quantity: Math.max(0, newQuantity) };
           }
