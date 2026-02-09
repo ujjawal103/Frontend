@@ -50,6 +50,8 @@ import AdminSettlementPage from './pages/admin/AdminSettlementPage'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminStoreDetails from './pages/admin/AdminStoreDetails'
 import InventoryDashboard from './pages/InventryDashboard'
+import StoreWallet from './pages/StoreWallet'
+import AdminStoreWallet from './pages/admin/AdminStoreWallet'
 
 
 
@@ -157,6 +159,14 @@ const navigate = useNavigate();
         <Route path='/admin/settlements/:storeId' element={
           <AdminProtectedWrapper>
             <AdminSettlementPage />
+          </AdminProtectedWrapper>
+        }
+        />
+
+
+        <Route path='/admin/wallets/:storeId' element={
+          <AdminProtectedWrapper>
+            <AdminStoreWallet />
           </AdminProtectedWrapper>
         }
         />
@@ -306,6 +316,13 @@ const navigate = useNavigate();
         <Route path="/store-settlement" element={
           <StoreProtectedWrapper>
             <StoreSettlements />
+          </StoreProtectedWrapper>
+        } />
+
+
+        <Route path="/store-wallet" element={
+          <StoreProtectedWrapper>
+            <StoreWallet />
           </StoreProtectedWrapper>
         } />
 
