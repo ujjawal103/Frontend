@@ -6,53 +6,79 @@ import SquareLoader from '../components/SquareLoader';
 import toast from 'react-hot-toast';
 import { StoreDataContext } from '../context/StoreContext';
 
+// const StoreProtectedWrapper = ({ children }) => {
+
+//   const { store, setStore, isLoading, setIsLoading } = useContext(StoreDataContext);
+
+
+//   const token = localStorage.getItem('token');
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     if (!token) {
+//       navigate("/store-login");
+//     }
+
+
+//   axios.get(`${import.meta.env.VITE_BASE_URL}stores/profile` , {
+//     headers: {
+//       'Authorization': `Bearer ${token}`
+//     }
+//   })
+//     .then(response => {
+//       if(response.status === 200){
+//         setStore(response.data.store);
+//         setIsLoading(false);
+//       }else{
+//         localStorage.removeItem('token');
+//         navigate("/store-login");
+//         toast.error("Store is not registered");
+//         setIsLoading(false);
+//         setStore({});
+//       }
+      
+//     })
+//     .catch(error => {
+//         localStorage.removeItem('token');
+//         navigate("/store-login");
+//         toast.error("Please login again");
+//         setIsLoading(false);
+//         setStore({});
+//     });
+
+//   }, [token, navigate]);
+
+//   if(isLoading){
+//     return <SquareLoader />;
+//   }
+
+//   return <>{children}</>;
+// };
+
+// export default StoreProtectedWrapper;
+
+
+
+
+
+
+
+
+
+
+//optimizing loading on each navigation
 const StoreProtectedWrapper = ({ children }) => {
-
-  const { store, setStore, isLoading, setIsLoading } = useContext(StoreDataContext);
-
-
-  const token = localStorage.getItem('token');
+  const { store, isLoading } = useContext(StoreDataContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
+    if (!isLoading && !store?._id) {
       navigate("/store-login");
     }
+  }, [isLoading, store, navigate]);
 
+  if (isLoading) return <SquareLoader />;
 
-  axios.get(`${import.meta.env.VITE_BASE_URL}stores/profile` , {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  })
-    .then(response => {
-      if(response.status === 200){
-        setStore(response.data.store);
-        setIsLoading(false);
-      }else{
-        localStorage.removeItem('token');
-        navigate("/store-login");
-        toast.error("Store is not registered");
-        setIsLoading(false);
-        setStore({});
-      }
-      
-    })
-    .catch(error => {
-        localStorage.removeItem('token');
-        navigate("/store-login");
-        toast.error("Please login again");
-        setIsLoading(false);
-        setStore({});
-    });
-
-  }, [token, navigate]);
-
-  if(isLoading){
-    return <SquareLoader />;
-  }
-
-  return <>{children}</>;
+  return children;
 };
 
-export default StoreProtectedWrapper;
