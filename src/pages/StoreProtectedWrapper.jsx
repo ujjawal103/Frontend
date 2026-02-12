@@ -82,3 +82,6 @@ const StoreProtectedWrapper = ({ children }) => {
   return children;
 };
 
+
+export default StoreProtectedWrapper;
+
