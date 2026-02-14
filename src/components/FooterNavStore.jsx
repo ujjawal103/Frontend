@@ -1,5 +1,5 @@
 // FooterNavStore.jsx
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   FaHome,
@@ -26,6 +26,7 @@ import axios from "axios";
 import Loading from "./Loading";
 import toast from "react-hot-toast";
 import AccountDrawerStore from "./AccountDrawerStore";
+import { StoreDataContext } from "../context/StoreContext";
 
 export default function FooterNavStore() {
   const location = useLocation();
@@ -33,31 +34,44 @@ export default function FooterNavStore() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const { store } = useContext(StoreDataContext);
 
-  const handleProfile = async () => {
-    setLoading(true);
-    setMessage("Fetching profile...");
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}stores/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        setLoading(false);
-        setMessage("");
-        setProfileFetched(response.data);
-        setDrawerOpen(true);
-      }
-    } catch (error) {
-      setLoading(false);
-      setMessage("");
-      setProfileFetched(null);
-      setDrawerOpen(false);
-      toast.error("Something went wrong!");
+  // const handleProfile = async () => {
+  //   setLoading(true);
+  //   setMessage("Fetching profile...");
+  //   try {
+  //     const response = await axios.get(
+  //       `${import.meta.env.VITE_BASE_URL}stores/profile`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     if (response.status === 200) {
+  //       setLoading(false);
+  //       setMessage("");
+  //       setProfileFetched(response.data);
+  //       setDrawerOpen(true);
+  //     }
+  //   } catch (error) {
+  //     setLoading(false);
+  //     setMessage("");
+  //     setProfileFetched(null);
+  //     setDrawerOpen(false);
+  //     toast.error("Something went wrong!");
+  //   }
+  // };
+
+
+
+  const handleProfile = () => {
+    if (store) {
+      setProfileFetched({ store });
+      setDrawerOpen(true);
+    }else {
+      toast.error("Store data not available!");
+      return;
     }
   };
 

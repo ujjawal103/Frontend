@@ -16,8 +16,9 @@ import VariantEditButton from "./VariantEditButton";
 import VariantDeleteButton from "./VariantDeleteButton";
 import VariantToggleButton from "./VariantToggleButton";
 import Loading from "./Loading";
+import ItemListSkeleton from "./ItemListSkeleton";
 
-const ItemList = ({ items, onRefresh }) => {
+const ItemList = ({ items, onRefresh, loadingItems }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showVariantManager, setShowVariantManager] = useState(false);
@@ -105,6 +106,11 @@ const handleDelete = async () => {
     }
   };
 
+  if (loadingItems) {
+   return <ItemListSkeleton />;
+}
+
+
   if (items.length === 0) {
     return (
       <div className="text-center text-gray-600 py-8">
@@ -113,9 +119,13 @@ const handleDelete = async () => {
     );
   }
 
+ 
+
+
   return (
     <>
-    {loading && <Loading message={message} /> }
+    {/* {loading && <Loading message={message} /> } */}
+    
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {items.map((item) => (
         <div
