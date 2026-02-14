@@ -7,6 +7,7 @@ import StoreCartDrawer from "../components/StoreCartDrawer";
 import { StoreDataContext } from "../context/StoreContext";
 import FooterNavStore from "../components/FooterNavStore";
 import CategoryFilterQRBar from "../components/CategoryFilterQRBar";
+import MenuItemCardSkeleton from "../components/MenuItemCardSkeleton";
 import { Helmet } from 'react-helmet-async'
 
 const StoreMenu = ({ restaurantName = "Your Menu" }) => {
@@ -181,7 +182,7 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <div className="w-full md:pl-65 mb-20 md:mb-0 min-h-[100vh] bg-gray-200 ">
@@ -214,19 +215,25 @@ const StoreMenu = ({ restaurantName = "Your Menu" }) => {
 
       <div className="px-4 pb-18 md:pb-22">
         <div className="space-y-3">
-        {filteredItems.length === 0 ? (
-          <p className="text-center text-gray-500">No items found</p>
-        ) : (
-          filteredItems.map((item) => (
-            <MenuItemCard
-              key={item._id}
-              item={item}
-              addToCart={addToCart}
-              updateQuantity={updateQuantity}
-              cart={cart}
-            />
-          ))
-        )}
+        {loading ? (
+            <>
+              {[...Array(6)].map((_, index) => (
+                <MenuItemCardSkeleton key={index} />
+              ))}
+            </>
+          ) : filteredItems.length === 0 ? (
+            <p className="text-center text-gray-500">No items found</p>
+          ) : (
+            filteredItems.map((item) => (
+              <MenuItemCard
+                key={item._id}
+                item={item}
+                addToCart={addToCart}
+                updateQuantity={updateQuantity}
+                cart={cart}
+              />
+            ))
+          )}
       </div>
       </div>
 

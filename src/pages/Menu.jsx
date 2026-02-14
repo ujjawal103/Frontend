@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from "react-router-dom";
+import MenuItemCardSkeleton from "../components/MenuItemCardSkeleton";
 
 
 const Menu = ({ restaurantName = "Demo sweets" }) => {
@@ -177,7 +178,7 @@ const handleSearch = (e) => {
 };
 
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <div className="pb-28 min-h-[100vh] bg-gray-200">
@@ -215,7 +216,13 @@ const handleSearch = (e) => {
       {/* Menu List */}
       <div className="px-4">
       <div className="space-y-3">
-        {filteredItems.length === 0 ? (
+        {loading ? (
+          <>
+            {[...Array(6)].map((_, index) => (
+              <MenuItemCardSkeleton key={index} />
+            ))}
+          </>
+        ) : filteredItems.length === 0 ? (
           <p className="text-center text-gray-500">No items found</p>
         ) : (
           filteredItems.map((item) => (

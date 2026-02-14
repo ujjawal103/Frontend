@@ -80,7 +80,7 @@ const fetchTables = async () => {
 
   return (
     <>
-      {loading && <Loading message={message} />}
+      {/* {loading && <Loading message={message} />} */}
 
       <Helmet>
         <title>Table Management – Tap Resto</title>
