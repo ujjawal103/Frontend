@@ -18,13 +18,14 @@ import VariantToggleButton from "./VariantToggleButton";
 import Loading from "./Loading";
 import ItemListSkeleton from "./ItemListSkeleton";
 
-const ItemList = ({ items, onRefresh, loadingItems }) => {
+const ItemList = ({ items, onRefresh, loadingItems , setItems }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showVariantManager, setShowVariantManager] = useState(false);
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showAddVariant, setShowAddVariant] = useState(false);
   const [variantData, setVariantData] = useState({ name: "", price: "" });
+  const [actionLoadingId, setActionLoadingId] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState({
   visible: false,
   itemId: null,
@@ -34,42 +35,84 @@ const ItemList = ({ items, onRefresh, loadingItems }) => {
   const [message , setMessage] = useState("");
   const token = localStorage.getItem("token");
 
-  // ✅ Toggle item availability
+  // ✅ Toggle item availability with optimistic UI update and rollback on failure
   const handleToggleAvailability = async (itemId, available) => {
-    try {
-      setLoading(true);
-      setMessage("Working on it...");
-      await axios.put(
-        `${import.meta.env.VITE_BASE_URL}items/edit/available/${itemId}`,
-        { available: !available },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      toast.success(`Item marked as ${!available ? "available" : "unavailable"}`);
-      onRefresh();
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update availability");
-    }
-    finally{
-      setLoading(false);
-      setMessage("");
-    }
-  };
+  try {
+    setActionLoadingId(itemId);
+
+    const newAvailability = !available;
+
+    // 🔥 Optimistic UI update (item + all variants sync)
+    setItems(prev =>
+      prev.map(item => {
+        if (item._id !== itemId) return item;
+
+        return {
+          ...item,
+          available: newAvailability,
+          variants: item.variants.map(variant => ({
+            ...variant,
+            available: newAvailability
+          }))
+        };
+      })
+    );
+
+    await axios.put(
+      `${import.meta.env.VITE_BASE_URL}items/edit/available/${itemId}`,
+      { available: newAvailability },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to update availability"
+    );
+
+    // ❌ Rollback everything
+    setItems(prev =>
+      prev.map(item => {
+        if (item._id !== itemId) return item;
+
+        return {
+          ...item,
+          available: available,
+          variants: item.variants.map(variant => ({
+            ...variant,
+            available: available
+          }))
+        };
+      })
+    );
+
+  } finally {
+    setActionLoadingId(null);
+  }
+};
+
 
 
  // ✅ Delete item with custom popup
 const handleDelete = async () => {
   if (!confirmDelete.itemId) return;
+
+  const id = confirmDelete.itemId;
+  // 🔥 Remove instantly
+  setItems(prev => prev.filter(item => item._id !== id));
+
+  setConfirmDelete({ visible: false, itemId: null, itemName: "" });
   try {
     setLoading(true);
-    setMessage("Deleting Item...");
+    setMessage("Deleting item...");
     await axios.delete(`${import.meta.env.VITE_BASE_URL}items/remove/${confirmDelete.itemId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     toast.success(`${confirmDelete.itemName} deleted successfully!`);
-    setConfirmDelete({ visible: false, itemId: null, itemName: "" });
-    onRefresh();
+    // setConfirmDelete({ visible: false, itemId: null, itemName: "" });
+    // onRefresh();
   } catch (error) {
     toast.error(error.response?.data?.message || "Failed to delete item");
+    onRefresh(); // Re-fetch to restore deleted item on failure
   }finally{
     setLoading(false);
     setMessage("");
@@ -161,74 +204,74 @@ const handleDelete = async () => {
               <p className="text-gray-600 text-sm break-words">{item.description}</p>
             </div>
 
- {/* Variants */}
-<div className="mt-3 flex-grow mb-2">
-  <div className="flex justify-between items-center mb-1">
-    <h4 className="font-medium text-gray-700 text-sm mb-1">Variants:</h4>
-    <button
-      className="flex items-center gap-1 text-blue-500 text-sm hover:text-blue-700 cursor-pointer"
-      onClick={() => {
-        setSelectedItem(item);
-        setShowAddVariant(true);
-      }}
-    >
-      <PlusCircle size={16} /> Add Variant
-    </button>
-  </div>
+            {/* Variants */}
+            <div className="mt-3 flex-grow mb-2">
+              <div className="flex justify-between items-center mb-1">
+                <h4 className="font-medium text-gray-700 text-sm mb-1">Variants:</h4>
+                <button
+                  className="flex items-center gap-1 text-blue-500 text-sm hover:text-blue-700 cursor-pointer"
+                  onClick={() => {
+                    setSelectedItem(item);
+                    setShowAddVariant(true);
+                  }}
+                >
+                  <PlusCircle size={16} /> Add Variant
+                </button>
+              </div>
 
-  <ul className="text-sm text-gray-900 space-y-0 ml-0 bg-orange-200 rounded-xl">
-    {item.variants.length > 0 ? (
-      item.variants.map((variant) => (
-        <li
-          key={variant._id}
-          className={`flex justify-between items-center p-3 border-b border-orange-300 last:border-0 rounded-md relative transition-all duration-300 ${
-            variant.available
-              ? "bg-orange-200"
-              : "bg-gray-200 grayscale opacity-70"
-          }`}
-        >
-          <div className="w-5/3 flex items-center justify-between p-2 mr-10 last:border-0 ">
-              <span className="font-medium">{variant.name}</span>
-              <span className="ml-2 text-gray-700 font-semibold text-start">
-                ₹{variant.price}
-              </span>
-          </div>
+              <ul className="text-sm text-gray-900 space-y-0 ml-0 bg-orange-200 rounded-xl">
+                {item.variants.length > 0 ? (
+                  item.variants.map((variant) => (
+                    <li
+                      key={variant._id}
+                      className={`flex justify-between items-center p-3 border-b border-orange-300 last:border-0 rounded-md relative transition-all duration-300 ${
+                        variant.available
+                          ? "bg-orange-200"
+                          : "bg-gray-200 grayscale opacity-70"
+                      }`}
+                    >
+                      <div className="w-5/3 flex items-center justify-between p-2 mr-10 last:border-0 ">
+                          <span className="font-medium">{variant.name}</span>
+                          <span className="ml-2 text-gray-700 font-semibold text-start">
+                            ₹{variant.price}
+                          </span>
+                      </div>
 
-          {/* Availability Badge */}
-          {
-            !variant.available && <span
-            className={`absolute top-[-7px] left-[-3px] text-[7px] px-2 py-1 rounded bg-red-600 text-white`}
-          >
-            Unavailable
-          </span>
-          }
+                      {/* Availability Badge */}
+                      {
+                        !variant.available && <span
+                        className={`absolute top-[-7px] left-[-3px] text-[7px] px-2 py-1 rounded bg-red-600 text-white`}
+                      >
+                        Unavailable
+                      </span>
+                      }
 
 
-          {/* Action Buttons */}
-          <div className="flex gap-2 items-center ml-auto">
-            <VariantEditButton
-              item={item}
-              variant={variant}
-              onUpdated={onRefresh}
-            />
-            <VariantDeleteButton
-              item={item}
-              variant={variant}
-              onUpdated={onRefresh}
-            />
-            <VariantToggleButton
-              item={item}
-              variant={variant}
-              onUpdated={onRefresh}
-            />
-          </div>
-        </li>
-      ))
-    ) : (
-      <p className="text-red-700 italic p-2">No variants yet</p>
-    )}
-  </ul>
-</div>
+                      {/* Action Buttons */}
+                      <div className="flex gap-2 items-center ml-auto">
+                        <VariantEditButton
+                          item={item}
+                          variant={variant}
+                          onUpdated={onRefresh}
+                        />
+                        <VariantDeleteButton
+                          item={item}
+                          variant={variant}
+                          onUpdated={onRefresh}
+                        />
+                        <VariantToggleButton
+                          item={item}
+                          variant={variant}
+                          onUpdated={onRefresh}
+                        />
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <p className="text-red-700 italic p-2">No variants yet</p>
+                )}
+              </ul>
+            </div>
 
           </div>
 
@@ -280,6 +323,7 @@ const handleDelete = async () => {
               {/* ✅ Better Availability Toggle Button */}
               <button
                 onClick={() => handleToggleAvailability(item._id, item.available)}
+                disabled={actionLoadingId === item._id}
                 className={`transition-all duration-300 rounded-full px-4 py-2 cursor-pointer flex items-center gap-2 font-medium text-white shadow-md 
                   ${
                     item.available
@@ -287,7 +331,9 @@ const handleDelete = async () => {
                       : "bg-gray-400 hover:bg-gray-500"
                   }`}
               >
-                {item.available ? (
+                {actionLoadingId === item._id
+                  ? "Updating..."
+                : item.available ? (
                   <>
                     <ToggleRight size={22} /> <span>Available</span>
                   </>

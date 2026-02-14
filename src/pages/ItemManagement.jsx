@@ -18,7 +18,6 @@ const ItemManagement = () => {
   const [count, setCount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
-  
 
 
   const token = localStorage.getItem("token");
@@ -39,10 +38,6 @@ const ItemManagement = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    console.log("Items state updated:", items);
-  }, [items]);
 
   // ✅ Add new item
   const handleAddItem = async (newItem) => {
@@ -189,7 +184,7 @@ const handleAddCategory = () => {
 
         {/* ✅ Item List */}
         <div className="p-4 pt-0 md:p-0">
-          <ItemList items={filteredItems} onRefresh={fetchItems} loadingItems={loading}/>
+          <ItemList items={filteredItems} onRefresh={fetchItems} loadingItems={loading} setItems={setItems}/>
         </div>
       </div>
 
