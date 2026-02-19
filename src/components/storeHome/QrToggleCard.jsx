@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { StoreDataContext } from "../../context/StoreContext";
 
 const QrToggleCard = () => {
-  const { store, updateStore } = useContext(StoreDataContext);
+  const { store, setStore } = useContext(StoreDataContext);
   const [loading, setLoading] = useState(false);
   console.log("QR Ordering Enabled:", store);
 
@@ -27,7 +27,7 @@ const QrToggleCard = () => {
         }
       );
 
-      updateStore({
+      setStore({
         ...store,
         qrOrderingEnabled: data.qrOrderingEnabled,
       });
@@ -36,8 +36,9 @@ const QrToggleCard = () => {
         `QR ordering ${data.qrOrderingEnabled ? "enabled" : "disabled"}`
       );
     } catch (err) {
-      toast.error("Failed to update QR ordering");
-    } finally {
+  toast.error("Failed to update QR ordering");
+}
+ finally {
       setLoading(false);
     }
   };
