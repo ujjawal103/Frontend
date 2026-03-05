@@ -124,49 +124,83 @@ const OrderBillModal = ({ orderId, setOrders, onClose }) => {
 };
 
 const handleKOTPrint = () => {
-  let kotHTML = `
-  <div style="font-family: 'Courier New', monospace; width:250px; margin:auto;">
-    <h3 style="text-align:center;">KITCHEN ORDER TICKET</h3>
-    <hr/>
+  const win = window.open("", "", "width=400,height=600");
 
-    <p>
-      <strong>Order:</strong> ${order._id}<br/>
-      <strong>Table:</strong> ${order.tableId?.tableNumber || "N/A"}<br/>
-      <strong>Date:</strong> ${new Date(order.createdAt).toLocaleString()}
-    </p>
-
-    <hr/>
-  `;
+  let itemsHTML = "";
 
   order.items.forEach(item => {
-    kotHTML += `<p><strong>${item.itemName}</strong></p>`;
+    itemsHTML += `<tr>
+        <td colspan="2"><strong>${item.itemName}</strong></td>
+      </tr>`;
 
     item.variants.forEach(v => {
-      kotHTML += `
-        <p style="margin-left:10px;">
-          ${v.type} × ${v.quantity}
-        </p>
+      itemsHTML += `
+        <tr>
+          <td>${v.type} × ${v.quantity}</td>
+          <td></td>
+        </tr>
       `;
     });
   });
 
-  kotHTML += `
-    <hr/>
-    <p style="text-align:center;">Send to Kitchen</p>
-  </div>
-  `;
-
-  const win = window.open("", "", "width=400,height=600");
-
   win.document.write(`
-    <html>
-      <head>
-        <title>KOT</title>
-      </head>
-      <body>
-        ${kotHTML}
-      </body>
-    </html>
+  <html>
+    <head>
+      <style>
+        body {
+          font-family: 'Courier New', monospace;
+          padding: 10px;
+        }
+
+        .bill-container {
+          width: 250px;
+          margin:auto;
+        }
+
+        table {
+          width:100%;
+          font-size:12px;
+        }
+
+        td {
+          padding:3px 0;
+        }
+
+        .line{
+          border-bottom:1px dashed #ccc;
+          margin:6px 0;
+        }
+      </style>
+    </head>
+
+    <body>
+
+      <div class="bill-container">
+
+        <h3 style="text-align:center;">KITCHEN ORDER TICKET</h3>
+
+        <div class="line"></div>
+
+        <p>
+          Order: ${order._id}<br/>
+          Table: ${order.tableId?.tableNumber || "N/A"}<br/>
+          Date: ${new Date(order.createdAt).toLocaleString()}
+        </p>
+
+        <div class="line"></div>
+
+        <table>
+          ${itemsHTML}
+        </table>
+
+        <div class="line"></div>
+
+        <p style="text-align:center;">Send to Kitchen</p>
+
+      </div>
+
+    </body>
+  </html>
   `);
 
   win.document.close();
