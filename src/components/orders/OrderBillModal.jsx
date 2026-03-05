@@ -123,6 +123,60 @@ const OrderBillModal = ({ orderId, setOrders, onClose }) => {
   };
 };
 
+const handleKOTPrint = () => {
+  let kotHTML = `
+  <div style="font-family: 'Courier New', monospace; width:250px; margin:auto;">
+    <h3 style="text-align:center;">KITCHEN ORDER TICKET</h3>
+    <hr/>
+
+    <p>
+      <strong>Order:</strong> ${order._id}<br/>
+      <strong>Table:</strong> ${order.tableId?.tableNumber || "N/A"}<br/>
+      <strong>Date:</strong> ${new Date(order.createdAt).toLocaleString()}
+    </p>
+
+    <hr/>
+  `;
+
+  order.items.forEach(item => {
+    kotHTML += `<p><strong>${item.itemName}</strong></p>`;
+
+    item.variants.forEach(v => {
+      kotHTML += `
+        <p style="margin-left:10px;">
+          ${v.type} × ${v.quantity}
+        </p>
+      `;
+    });
+  });
+
+  kotHTML += `
+    <hr/>
+    <p style="text-align:center;">Send to Kitchen</p>
+  </div>
+  `;
+
+  const win = window.open("", "", "width=400,height=600");
+
+  win.document.write(`
+    <html>
+      <head>
+        <title>KOT</title>
+      </head>
+      <body>
+        ${kotHTML}
+      </body>
+    </html>
+  `);
+
+  win.document.close();
+
+  win.onload = () => {
+    win.focus();
+    win.print();
+  };
+};
+
 
   if (loading) {
     return (
@@ -268,14 +322,24 @@ const OrderBillModal = ({ orderId, setOrders, onClose }) => {
 
 
       {/* Buttons */}
-      <div className="mt-4 flex justify-center gap-3">
+      <div className="mt-4 flex justify-center gap-2">
+
+        <button
+          onClick={handleKOTPrint}
+          className="flex items-center gap-1 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700"
+        >
+          <Printer size={14} />
+          Print KOT
+        </button>
+
         <button
           onClick={handlePrint}
-          className="flex items-center gap-2 px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700"
+          className="flex items-center gap-1 px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
         >
-          <Printer size={16} />
+          <Printer size={14} />
           Print Bill
         </button>
+
         <ShareInvoiceButton
           orderId={order._id}
           text={order.isShared ? "Re-share" : "Share"}
@@ -283,6 +347,7 @@ const OrderBillModal = ({ orderId, setOrders, onClose }) => {
           onWhatsappMissing={() => setShowWhatsappInput(true)}
           markShared={markShared}
         />
+
       </div>
     </div>
   </div>
