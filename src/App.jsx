@@ -52,6 +52,9 @@ import AdminStoreDetails from './pages/admin/AdminStoreDetails'
 import InventoryDashboard from './pages/InventryDashboard'
 import StoreWallet from './pages/StoreWallet'
 import AdminStoreWallet from './pages/admin/AdminStoreWallet'
+import DeliverySettings from './pages/DeliverySettings'
+import DeliveryMenu from './pages/DeliveryMenu'
+import SelectLocationPage from './pages/SelectLocationPage'
 
 
 
@@ -188,12 +191,26 @@ const navigate = useNavigate();
             <Menu/>
           } />
 
+          <Route path='/order-delivery/:storeId' element={
+            <DeliveryMenu />
+          } />
+
+          <Route path='/select-location' element={
+             <SelectLocationPage />
+          } />
+
           <Route path="/last-order" element={<LastOrderPage />} />
 
 
           <Route path='/store-menu' element={
             <StoreProtectedWrapper>
               <StoreMenu />
+            </StoreProtectedWrapper>
+          } />
+
+          <Route path="/delivery-settings" element={
+            <StoreProtectedWrapper>
+              <DeliverySettings />
             </StoreProtectedWrapper>
           } />
 

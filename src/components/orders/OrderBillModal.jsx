@@ -183,7 +183,13 @@ const handleKOTPrint = () => {
 
         <p>
           Order: ${order._id}<br/>
-          Table: ${order.tableId?.tableNumber || "N/A"}<br/>
+          ${
+            (order.tableId || order.orderType === "dine-in") ? (
+              `<strong>Table:</strong> ${order.tableId?.tableNumber || "N/A"}`
+            ) : (
+              `<strong>Order Type:</strong> ${order.orderType === "delivery" ? "QR Delivery" : "Takeaway"}`
+            )
+          }<br/>
           Date: ${new Date(order.createdAt).toLocaleString()}
         </p>
 
@@ -259,7 +265,19 @@ const handleKOTPrint = () => {
         <div className="line my-2 border-b border-dashed border-gray-300"></div>
         <p className="text-xs break-words">
           <strong>Order ID:</strong> {order._id} <br />
-          <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"} <br />
+          {
+            (order.tableId || order.orderType === "dine-in") ? (
+              <>
+                <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"}
+              </>
+            ) : (
+              <>
+                <strong>Order Type:</strong> {order.orderType === "delivery" ? "QR Delivery" : "Takeaway"}
+              </>
+            )
+          }
+          
+          <br />
           <strong>Customer:</strong> {order.username || "Guest"} <br />
           <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}
         </p>
@@ -313,6 +331,14 @@ const handleKOTPrint = () => {
                 </td>
               </tr>
             )}
+            {order.orderType === "delivery" && (
+              <tr>
+                <td>Delivery Charge</td>
+                <td className="text-right right">
+                  ₹{order.deliveryDetails?.deliveryCharge?.toFixed(2) || "0.00"}
+                </td>
+              </tr>
+            )}
             <tr>
               <td className="font-semibold"><strong>Total</strong></td>
               <td className="text-right font-semibold right">
@@ -321,6 +347,17 @@ const handleKOTPrint = () => {
             </tr>
           </tbody>
         </table>
+
+        {order.orderType === "delivery" && order.deliveryDetails?.address && (
+          <>
+            <div className="line my-2 border-b border-dashed border-gray-300"></div>
+
+            <p className="text-xs text-center break-words">
+              <strong>Delivery Address</strong><br />
+              {order.deliveryDetails.address}
+            </p>
+          </>
+        )}
 
         <div className="line my-2 border-b border-dashed border-gray-300"></div>
         <p className="text-[10px] text-center text-gray-500 break-words">

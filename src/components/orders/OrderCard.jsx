@@ -52,7 +52,9 @@ const OrderCard = ({ order, setOrders, onUpdateStatus, onCancel, tableNumber = n
       >
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-sm">
-            Table #{order.tableId?.tableNumber || tableNumber || "N/A"}
+            {
+              (order.tableId || order.orderType === "dine-in") ? `Table #${order.tableId.tableNumber || tableNumber || "N/A"}` : (order.orderType === "delivery" ? "Delivery Order" : "Takeaway Order")
+            }
           </h3>
           <span
             className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -69,7 +71,7 @@ const OrderCard = ({ order, setOrders, onUpdateStatus, onCancel, tableNumber = n
           </span>
         </div>
 
-        <p className="text-gray-600 mt-1 text-xs">👤 {order.username || "Guest"}</p>
+        <p className="text-gray-600 mt-1 text-xs truncate w-[80vw]">👤 {order.username || "Guest"} </p>
         <p className="text-gray-600 text-xs flex items-center gap-1"><FaWhatsapp /> {order.whatsapp || "Not provided"}</p>
         <p className="text-gray-500 text-xs">
           {new Date(order.createdAt).toLocaleString()}

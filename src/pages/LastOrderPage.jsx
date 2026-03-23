@@ -91,6 +91,19 @@ const LastOrderPage = () => {
         <p className="text-xs break-words">
           <strong>Order ID:</strong> {order._id} <br />
           {/* <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"} <br /> */}
+          {
+            (order.tableId || order.orderType === "dine-in") ? (
+              <>
+                <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"}
+              </>
+            ) : (
+              <>
+                <strong>Order Type:</strong> {order.orderType === "delivery" ? "QR Delivery" : "Takeaway"}
+              </>
+            )
+          }
+          
+          <br />
           <strong>Customer:</strong> {order.username || "Guest"} <br />
           <strong>Date:</strong>{" "}
           {new Date(order.createdAt).toLocaleString()}

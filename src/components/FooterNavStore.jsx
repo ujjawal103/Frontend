@@ -20,7 +20,8 @@ import {
   FaFileContract,
   FaTags,
   FaWallet,
-  FaBoxOpen       
+  FaBoxOpen,
+  FaTruck        
 } from "react-icons/fa";
 import axios from "axios";
 import Loading from "./Loading";
@@ -301,6 +302,24 @@ export default function FooterNavStore() {
             >
               <FaBoxOpen size={22} />
               <span className="text-sm">Inventries / Stock</span>
+            </Link>
+          </div>
+
+          {/* Delivery Settings */}
+          <div
+            className={`hidden md:w-60 md:flex cursor-pointer ${
+              isActive("/delivery-settings")
+                ? "md:bg-gray-800" : "md:hover:bg-gray-800"
+            }`}
+          >
+            <Link
+              to="/delivery-settings"
+              className={`flex items-center gap-2 text-black md:text-white ${
+                isActive("/delivery-settings") ? "border-t" : ""
+              } w-full p-4`}
+            >
+              <FaTruck size={22} />
+              <span className="text-sm">Delivery Settings</span>
             </Link>
           </div>
 
