@@ -9,7 +9,7 @@ import DeliveryToggleCard from "../components/Delivery/DeliveryToggleCard";
 import DeliveryPricingCard from "../components/Delivery/DeliveryPricingCard";
 import FreeDeliveryCard from "../components/Delivery/FreeDeliveryCard";
 import StoreLocationCard from "../components/Delivery/StoreLocationCard";
-import DeliveryZoneCard from "../components/Delivery/DeliveryzoneCard";
+import DeliveryZoneCard from "../components/Delivery/DeliveryZoneCard";
 import { StoreDataContext } from "../context/StoreContext";
 
 
