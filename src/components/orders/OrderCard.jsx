@@ -53,7 +53,7 @@ const OrderCard = ({ order, setOrders, onUpdateStatus, onCancel, tableNumber = n
         <div className="flex justify-between items-center">
           <h3 className="font-medium text-sm">
             {
-              (order.tableId || order.orderType === "dine-in") ? `Table #${order.tableId.tableNumber || tableNumber || "N/A"}` : (order.orderType === "delivery" ? "Delivery Order" : "Takeaway Order")
+              (order.tableId || order.orderType === "dine-in") ? `Table #${order?.tableId?.tableNumber || tableNumber || "N/A"}` : (order.orderType === "delivery" ? "QR Delivery Order" : "Takeaway Order")
             }
           </h3>
           <span
