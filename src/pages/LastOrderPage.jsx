@@ -166,6 +166,14 @@ const LastOrderPage = () => {
                 </td>
               </tr>
             )}
+            {order.orderType === "delivery" && (
+              <tr>
+                <td>Delivery Charge</td>
+                <td className="text-right right">
+                  ₹{order.deliveryDetails?.deliveryCharge?.toFixed(2) || "0.00"}
+                </td>
+              </tr>
+            )}
 
             <tr className="font-semibold">
               <td>Total</td>
@@ -175,6 +183,17 @@ const LastOrderPage = () => {
             </tr>
           </tbody>
         </table>
+
+        {order.orderType === "delivery" && order.deliveryDetails?.address && (
+          <>
+            <div className="line my-2 border-b border-dashed border-gray-300"></div>
+
+            <p className="text-xs text-center break-words">
+              <strong>Delivery Address</strong><br />
+              {order.deliveryDetails.address}
+            </p>
+          </>
+        )}
 
         <div className="border-b border-dashed border-gray-300 my-2" />
 
