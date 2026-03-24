@@ -181,7 +181,7 @@ const groupedArray = Object.values(groupedItems);
               "pendingPayment",
               JSON.stringify({
                 razorpayOrderId: data.razorpayOrderId, // ✅ SAFE
-                whatsapp: whatsapp.trim(),
+                whatsapp: savedPhone.trim(),
                 storeName: store.storeName,
                 storeDetails: store.storeDetails,
                 mode: "qr-pay-first",
@@ -193,8 +193,8 @@ const groupedArray = Object.values(groupedItems);
           navigate("/order-success");
         },
         prefill: {
-          name: username || "Guest",
-          contact: whatsapp || "",
+          name: savedName.trim() || "Guest",
+          contact: savedPhone.trim() || "",
         },
         theme: {
           color: "#ec4899",
