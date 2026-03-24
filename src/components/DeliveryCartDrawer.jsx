@@ -232,13 +232,13 @@ const groupedArray = Object.values(groupedItems);
 
   } catch (err) {
     console.log("ERROR FULL:", err);
-console.log("ERROR DATA:", err.response?.data);
+    console.log("ERROR DATA:", err.response?.data);
 
-const message = err.response?.data?.message;
-toast.error(message || "Checkout failed");
-  } finally {
-    setLoading(false);
-  }
+    const message = err.response?.data?.message;
+    toast.error(message || "Checkout failed");
+      } finally {
+        setLoading(false);
+      }
 };
 
 

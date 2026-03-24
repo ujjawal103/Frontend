@@ -92,7 +92,7 @@ const LastOrderPage = () => {
           <strong>Order ID:</strong> {order._id} <br />
           {/* <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"} <br /> */}
           {
-            (order.tableId || order.orderType === "dine-in") ? (
+            (order.orderType === "dine-in" && order.tableId?.tableNumber) ? (
               <>
                 <strong>Table:</strong> {order.tableId?.tableNumber || "N/A"}
               </>
