@@ -55,6 +55,9 @@ import AdminStoreWallet from './pages/admin/AdminStoreWallet'
 import DeliverySettings from './pages/DeliverySettings'
 import DeliveryMenu from './pages/DeliveryMenu'
 import SelectLocationPage from './pages/SelectLocationPage'
+import MonthlyDeliveryAnalytics from './pages/MonthlyDeliveryAnalytics'
+
+import Notifications from "./notification/Notification";
 
 
 
@@ -240,6 +243,12 @@ const navigate = useNavigate();
             </StoreProtectedWrapper>
           } />
 
+          <Route path='/monthly-qr-delivery-analytics' element={
+            <StoreProtectedWrapper>
+              <MonthlyDeliveryAnalytics />
+            </StoreProtectedWrapper>
+          } />
+
           <Route path='/table-analytics' element={
             <StoreProtectedWrapper>
               <TablesOrders />
@@ -380,6 +389,7 @@ const navigate = useNavigate();
       </Routes>
       </AppLayout>
       <Toaster position="top-right" reverseOrder={false} />
+      <Notifications position="top-right" />
     </div>
   )
 }

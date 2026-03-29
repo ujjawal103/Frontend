@@ -93,3 +93,19 @@ h4 {
   scrollbar-width: none;
 }
 
+
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s ease;
+}
