@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "../notification/Notification";
 import { useNavigate , useLocation } from "react-router-dom";
 import { Locate, MapPin, X, Navigation } from "lucide-react";
 import AddressDrawer from "../components/Delivery/AddressDrawer";

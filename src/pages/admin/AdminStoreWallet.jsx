@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "../../notification/Notification";
 import FooterNavAdmin from "../../components/FooterNavAdmin";
 import LoadingSkeleton from "../../components/orders/LoadingSkeleton";
 import WalletHeader from "../../components/wallet/WalletHeader";

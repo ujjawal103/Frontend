@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "../../notification/Notification";
 import { MapPin , X} from "lucide-react";
 
 const StoreLocationCard = ({ store, setStore }) => {

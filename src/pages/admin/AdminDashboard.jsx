@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "../../notification/Notification";
 import { useNavigate } from "react-router-dom";
 import AdminStoreCard from "../../components/admin/AdminStoreCard";
 import FooterNavAdmin from "../../components/FooterNavAdmin";

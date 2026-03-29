@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "../../notification/Notification";
 import AdminSettlementAnalytics from "../../components/settlement/AdminSettlementAnalytics";
 import AdminOrderCardExtra from "../../components/settlement/AdminOrderCardExtra";
 import LoadingSkeleton from "../../components/orders/LoadingSkeleton";

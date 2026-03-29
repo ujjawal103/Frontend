@@ -1,6 +1,6 @@
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
-// import { toast } from "react-hot-toast";
+// import { toast } from "../../notification/Notification";
 // import { MapContainer, TileLayer, Polygon, useMapEvents } from "react-leaflet";
 // import "leaflet/dist/leaflet.css";
 
@@ -158,7 +158,7 @@
 
 import React, { use, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "../../notification/Notification";
 import { MapPin } from "lucide-react";
 
 const DeliveryZoneCard = ({ store }) => {
