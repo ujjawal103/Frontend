@@ -464,7 +464,7 @@ useEffect(() => {
       {/* MAP */}
       <div
         ref={mapRef}
-        className="flex-1 relative"
+        className="flex-1  relative mb-[120px]"
       />
 
       {/* CENTER PIN */}
@@ -488,7 +488,7 @@ useEffect(() => {
       </div>
 
       {/* CURRENT LOCATION BUTTON */}
-        <div className="absolute bottom-30 left-1/2 -translate-x-1/2 z-10">
+        <div className="absolute bottom-[120px] left-1/2 -translate-x-1/2 z-10">
           <button
             onClick={useCurrentLocation}
             disabled={detectingCurrentLocation}
