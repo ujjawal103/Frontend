@@ -502,7 +502,7 @@ useEffect(() => {
 
 
 
-        {serviceStatus && (
+        {/* {serviceStatus && (
           <div className="px-3 pb-1 pt-1">
             <div className="text-center text-sm flex flex-col items-center gap-1">
 
@@ -532,10 +532,10 @@ useEffect(() => {
 
             </div>
           </div>
-        )}
+        )} */}
 
       {/* CONFIRM BUTTON */}
-      <div className="p-3 border-t">
+      {/* <div className="p-3 border-t">
         <button
           onClick={confirmLocation}
           disabled={loading}
@@ -543,6 +543,52 @@ useEffect(() => {
         >
           {loading ? "Processing..." : "Save & Add Address"}
         </button>
+      </div> */}
+
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-lg pb-[env(safe-area-inset-bottom)]">
+
+        {/* SERVICE STATUS */}
+        {serviceStatus && (
+          <div className="px-3 pt-2 text-center text-sm">
+
+            {serviceStatus === "allowed" && (
+              <p className="text-green-600 font-medium">
+                ✅ Delivery available at this location
+              </p>
+            )}
+
+            {serviceStatus === "not-serviceable" && (
+              <p className="text-red-600 font-medium">
+                ❌ Not serviceable. Try another location
+              </p>
+            )}
+
+            {serviceStatus === "no-store-location" && (
+              <p className="text-red-600 font-medium">
+                ❌ Store cannot deliver currently
+              </p>
+            )}
+
+            {serviceStatus === "no-config" && (
+              <p className="text-red-600 font-medium">
+                ❌ Delivery not configured for this store
+              </p>
+            )}
+
+          </div>
+        )}
+
+        {/* BUTTON */}
+        <div className="p-3">
+          <button
+            onClick={confirmLocation}
+            disabled={loading}
+            className="w-full bg-pink-600 text-white py-3 rounded-lg"
+          >
+            {loading ? "Processing..." : "Save & Add Address"}
+          </button>
+        </div>
+
       </div>
 
 

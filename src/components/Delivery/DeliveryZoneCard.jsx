@@ -171,7 +171,7 @@ const DeliveryZoneCard = ({ store }) => {
   const markersRef = useRef([]);
 
   const [points, setPoints] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingAction, setLoadingAction] = useState(null);
   const [maxDistanceKm, setMaxDistanceKm] = useState(0);
 
   const [query, setQuery] = useState("");
@@ -532,7 +532,7 @@ useEffect(() => {
 
     try {
 
-      setLoading(true);
+      setLoadingAction("save");
 
       await axios.patch(
         `${API}delivery/update-delivery-zone`,
@@ -553,7 +553,7 @@ useEffect(() => {
 
     } finally {
 
-      setLoading(false);
+      setLoadingAction(null);
 
     }
 
@@ -567,7 +567,7 @@ useEffect(() => {
 
   try {
 
-    setLoading(true);
+    setLoadingAction("delete");
 
     await axios.delete(
       `${API}delivery/delivery-zone`,
@@ -608,7 +608,7 @@ useEffect(() => {
 
   } finally {
 
-    setLoading(false);
+    setLoadingAction(null);
 
   }
 
@@ -638,6 +638,7 @@ useEffect(() => {
 
 
   const refreshMap = () => {
+    setLoadingAction("refresh");
     window.location.reload();
   };
 
@@ -806,14 +807,15 @@ const clearInput = () => {
 
         <button
           onClick={saveZone}
-          disabled={loading}
+          disabled={loadingAction !== null}
           className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg"
         >
-          {loading ? "Saving..." : "Save Zone"}
+          {loadingAction === "save" ? "Saving..." : "Save Zone"}
         </button>
 
         <button
           onClick={resetZone}
+          disabled={loadingAction !== null}
           className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg"
         >
           Reset
@@ -821,6 +823,7 @@ const clearInput = () => {
 
         <button
           onClick={undoPoint}
+          disabled={loadingAction !== null}
           className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg"
         >
           Undo
@@ -828,18 +831,18 @@ const clearInput = () => {
 
         <button
           onClick={deleteZone}
-          disabled={loading}
+          disabled={loadingAction !== null}
           className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg"
         >
-          {loading ? "Deleting..." : "Delete Zone"}
+          {loadingAction === "delete" ? "Deleting..." : "Delete Zone"}
         </button>
 
         <button
           onClick={refreshMap}
-          disabled={loading}
+          disabled={loadingAction !== null}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
         >
-          {loading ? "Loading..." : "Refresh Map"}
+          {loadingAction === "refresh" ? "Loading..." : "Refresh Map"}
         </button>
 
       </div>
