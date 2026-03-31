@@ -58,6 +58,7 @@ import SelectLocationPage from './pages/SelectLocationPage'
 import MonthlyDeliveryAnalytics from './pages/MonthlyDeliveryAnalytics'
 
 import Notifications from "./notification/Notification";
+import TrackDeliveryOrder from './pages/TrackDeliveryOrder'
 
 
 
@@ -203,6 +204,8 @@ const navigate = useNavigate();
           } />
 
           <Route path="/last-order" element={<LastOrderPage />} />
+
+          <Route path="/track-my-order" element={<TrackDeliveryOrder />} />
 
 
           <Route path='/store-menu' element={
