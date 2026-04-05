@@ -8,12 +8,19 @@ import {
 } from "lucide-react";
 
 let notify;
+let removeNotify;
 
 export const toast = {
   success: (msg, duration) => notify(msg, "success", duration),
   error: (msg, duration) => notify(msg, "error", duration),
   warning: (msg, duration) => notify(msg, "warning", duration),
   info: (msg, duration) => notify(msg, "info", duration),
+
+  // ✅ NEW: loading (no auto remove)
+  loading: (msg) => notify(msg, "loading", 0),
+
+  // ✅ NEW: dismiss manually
+  dismiss: (id) => removeNotify(id),
 };
 
 const positionClasses = {
@@ -39,6 +46,8 @@ const Notifications = ({ position = "top-center" }) => {
     if (duration > 0) {
       setTimeout(() => removeNotification(id), duration);
     }
+
+    return id; // ✅ IMPORTANT for dismiss
   };
 
   const removeNotification = (id) => {
@@ -47,6 +56,7 @@ const Notifications = ({ position = "top-center" }) => {
 
   useEffect(() => {
     notify = addNotification;
+    removeNotify = removeNotification;
   }, []);
 
   const getIcon = (type) => {
@@ -59,6 +69,10 @@ const Notifications = ({ position = "top-center" }) => {
         return <AlertCircle className={`${base} text-red-500`} />;
       case "warning":
         return <AlertTriangle className={`${base} text-yellow-500`} />;
+      case "loading":
+        return (
+          <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        );
       default:
         return <Info className={`${base} text-blue-500`} />;
     }
@@ -72,6 +86,8 @@ const Notifications = ({ position = "top-center" }) => {
         return "border-l-4 border-red-500";
       case "warning":
         return "border-l-4 border-yellow-500";
+      case "loading":
+        return "border-l-4 border-blue-500";
       default:
         return "border-l-4 border-blue-500";
     }
