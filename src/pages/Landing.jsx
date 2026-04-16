@@ -14,6 +14,7 @@ import Testimonials from "../components/Landing/Testimonials";
 import FAQAccordion from "../components/Landing/FAQAccordion";
 import Footer from "../components/Landing/Footer";
 import CallToActionBar from "../components/Landing/CallToActionBar";
+import DesktopDownloadSection from "../components/Landing/DesktopDownloadSection";
 
 const Landing = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -39,6 +40,7 @@ const Landing = () => {
         <ScreenshotsCarousel />
         <PricingCard />
         <AppDownloadSection />
+        <DesktopDownloadSection />
         <PartnersSection />
         <Testimonials />
         <FAQAccordion />
