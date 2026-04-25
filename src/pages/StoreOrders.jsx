@@ -130,11 +130,6 @@ const [range, setRange] = useState([
   fetchAllOrders(from, to);
 }, []);
 
-
-  // useEffect(() => {
-  //   fetchAllOrders();
-  // }, []);
-
   useEffect(() => {
     applyFilters();
   }, [statusFilter, dateFilter, orders]);
@@ -147,7 +142,7 @@ const [range, setRange] = useState([
         { headers: { Authorization: `Bearer ${storeToken}` } }
       );
       toast.success(`Status updated to '${status}'`);
-      fetchAllOrders();
+      fetchAllOrders(from, to);
     } catch {
       toast.error("Failed to update status");
     }
@@ -161,7 +156,7 @@ const [range, setRange] = useState([
         { headers: { Authorization: `Bearer ${storeToken}` } }
       );
       toast.success("Order cancelled");
-      fetchAllOrders();
+      fetchAllOrders(from, to);
     } catch {
       toast.error("Failed to cancel order");
     }
@@ -187,7 +182,7 @@ const [range, setRange] = useState([
     }
 
     toast.success("All orders marked as completed");
-    fetchAllOrders();
+    fetchAllOrders(from, to);
   } catch (err) {
     toast.error("Failed to mark all orders");
   } finally {
