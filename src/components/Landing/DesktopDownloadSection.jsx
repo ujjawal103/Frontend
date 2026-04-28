@@ -64,7 +64,7 @@ const DesktopDownloadSection = () => {
               <motion.a 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://drive.google.com/uc?export=download&id=1T2phJdzWy2NI_N3KXIPubxJAQ7W4u8fm" 
+                href="https://drive.google.com/uc?export=download&id=1JNHGt3k-E2aLTP-oYnULM4VdQxWhIFwy" 
                 className="flex items-center gap-3 bg-pink-600 text-white px-8 py-5 rounded-3xl font-black text-lg shadow-2xl"
               >
                 <svg

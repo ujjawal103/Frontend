@@ -40,98 +40,109 @@ const OrderBillModal = ({ orderId, setOrders, onClose }) => {
     );
   }
 
-  const handlePrint = () => {
+const handlePrint = () => {
   const printContents = printRef.current.innerHTML;
-  const win = window.open("", "", "width=400,height=600");
+  const win = window.open("", "", "width=300,height=600");
 
-  // ✅ Add full URL for image if relative path
-  const absolutePhotoUrl = order.storeId.storeDetails.photo.startsWith("http")
-    ? order.storeId.storeDetails.photo
-    : `${window.location.origin}${order.storeId.storeDetails.photo}`;
-
-  // Inject HTML & Styles
   win.document.write(`
   <html>
     <head>
       <style>
-        * {
-          box-sizing: border-box;
-          word-wrap: break-word;
-        }
-        body {
-          font-family: 'Courier New', monospace;
-          padding: 10px;
+        @page {
+          size: 58mm auto;
           margin: 0;
         }
-        .bill-container {
-          width: 250px;
-          margin: auto;
-          text-align: center;
-          overflow-wrap: break-word;
-          word-break: break-word;
+        * {
+          box-sizing: border-box;
         }
+
+        body {
+          font-family: 'Courier New', monospace;
+          margin: 0;
+          padding: 6px;
+          width: 58mm;
+        }
+
+        .bill-container {
+          width: 100%;
+          text-align: left;
+          font-size: 14px;
+        }
+
         img {
           display: block;
-          margin: 0 auto 8px auto;
-          width: 80px;
-          height: 80px;
+          margin: 0 auto 6px auto;
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
           object-fit: cover;
         }
+
+        h2 {
+          text-align: center;
+          font-size: 16px;
+          margin: 4px 0;
+        }
+
+        p {
+          margin: 2px 0;
+          line-height: 1.4;
+          font-size: 13px;
+        }
+
         .line {
-          border-bottom: 1px dashed #ccc;
+          border-bottom: 1px dashed #000;
           margin: 6px 0;
         }
+
         table {
           width: 100%;
-          font-size: 12px;
           border-collapse: collapse;
-          table-layout: fixed; /* ✅ ensures no column stretches */
+          font-size: 13px;
         }
+
         td {
-          padding: 3px 0;
+          padding: 2px 0;
           vertical-align: top;
-          word-wrap: break-word;
-          overflow-wrap: break-word;
         }
+
         .right {
-          text-align: right !important;
+          text-align: right;
         }
+
         strong {
-          word-break: break-word;
+          font-weight: bold;
         }
       </style>
     </head>
+
     <body>
       <div class="bill-container">
         ${printContents}
       </div>
     </body>
   </html>
-`);
-
+  `);
 
   win.document.close();
 
-  // ✅ Wait for the image to load before printing
   win.onload = () => {
     win.focus();
     win.print();
-
-    // ✅ Optional: Trigger automatic PDF download with proper filename
-    win.document.title = `Order_${order._id}.pdf`;
   };
 };
 
 const handleKOTPrint = () => {
-  const win = window.open("", "", "width=400,height=600");
+  const win = window.open("", "", "width=300,height=600");
 
   let itemsHTML = "";
 
   order.items.forEach(item => {
-    itemsHTML += `<tr>
+    itemsHTML += `
+      <tr>
         <td colspan="2"><strong>${item.itemName}</strong></td>
-      </tr>`;
+      </tr>
+    `;
 
     item.variants.forEach(v => {
       itemsHTML += `
@@ -147,49 +158,67 @@ const handleKOTPrint = () => {
   <html>
     <head>
       <style>
+        @page {
+          size: 58mm auto;
+          margin: 0;
+        }
         body {
           font-family: 'Courier New', monospace;
-          padding: 10px;
+          margin: 0;
+          padding: 6px;
+          width: 58mm;
+          font-size: 14px;
         }
 
         .bill-container {
-          width: 250px;
-          margin:auto;
+          width: 100%;
+          text-align: left;
+        }
+
+        h3 {
+          text-align: center;
+          margin: 4px 0;
+          font-size: 15px;
+        }
+
+        p {
+          margin: 2px 0;
+          line-height: 1.4;
+          font-size: 13px;
         }
 
         table {
-          width:100%;
-          font-size:12px;
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 13px;
         }
 
         td {
-          padding:3px 0;
+          padding: 2px 0;
         }
 
-        .line{
-          border-bottom:1px dashed #ccc;
-          margin:6px 0;
+        .line {
+          border-bottom: 1px dashed #000;
+          margin: 6px 0;
         }
       </style>
     </head>
 
     <body>
-
       <div class="bill-container">
 
-        <h3 style="text-align:center;">KITCHEN ORDER TICKET</h3>
+        <h3>KITCHEN ORDER TICKET</h3>
 
         <div class="line"></div>
 
         <p>
           Order: ${order._id}<br/>
           ${
-            (order.tableId || order.orderType === "dine-in") ? (
-              `<strong>Table:</strong> ${order.tableId?.tableNumber || "N/A"}`
-            ) : (
-              `<strong>Order Type:</strong> ${order.orderType === "delivery" ? "QR Delivery" : "Takeaway"}`
-            )
-          }<br/>
+            (order.tableId || order.orderType === "dine-in")
+              ? `<strong>Table:</strong> ${order.tableId?.tableNumber || "N/A"}`
+              : `<strong>Order Type:</strong> ${order.orderType === "delivery" ? "QR Delivery" : "Takeaway"}`
+          }
+          <br/>
           Date: ${new Date(order.createdAt).toLocaleString()}
         </p>
 
@@ -204,7 +233,6 @@ const handleKOTPrint = () => {
         <p style="text-align:center;">Send to Kitchen</p>
 
       </div>
-
     </body>
   </html>
   `);
